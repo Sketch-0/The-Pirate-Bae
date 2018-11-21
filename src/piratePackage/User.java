@@ -22,9 +22,10 @@ public class User {
         return connection;
     }
     
-    public int getID(){
+    public int getMemberID(){
         return memberid;
     }
+    
     
     
 }

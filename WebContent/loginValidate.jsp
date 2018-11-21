@@ -23,10 +23,10 @@
                 //redirect to failed login page
             }
             
-             out.println(isValid);
+             out.println(login.getAttribute("member"));
             %>
             
-            <form action="testingSession.jsp">
+            <form action="index.jsp">
                 <button>move</button>
             </form>
             

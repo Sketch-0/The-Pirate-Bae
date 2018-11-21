@@ -3,10 +3,14 @@ package piratePackage;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+<<<<<<< Updated upstream
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+=======
+>>>>>>> Stashed changes
 
 public class PirateUtility {
     
@@ -14,16 +18,24 @@ public class PirateUtility {
         try {
             Class.forName("com.mysql.jdbc.Driver");			
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost/moviestoredb", "root", "password");			
-
-            Statement st = con.createStatement();
-
-            ResultSet storedPass = st.executeQuery("select memberPassword from member where userName = '" + username + "';");
-            storedPass.next();
-            if(password.equals(storedPass.getString(1))){
+            
+            String loginQuery = "select memberPassword from member where userName = ?";            
+            PreparedStatement storedPass = con.prepareStatement(loginQuery);
+            
+            storedPass.setString(1, username);            
+            ResultSet returnedPass = storedPass.executeQuery();            
+            returnedPass.next();
+            
+            if(password.equals(returnedPass.getString(1))){
                 //get memberID out of database
-                ResultSet getID = st.executeQuery("select memberID from member where userName = '" + username + "';");
-                getID.next();
-                return getID.getInt(1);
+                String getMemberID = "select memberID from member where userName = ?";
+                PreparedStatement getID = con.prepareStatement(getMemberID);
+                
+                getID.setString(1, username);                
+                ResultSet returnedID = getID.executeQuery();
+                returnedID.next();
+                
+                return returnedID.getInt(1);
             }
 	}
         catch (Exception e) {
@@ -64,12 +76,7 @@ public class PirateUtility {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");			
 			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/moviestoredb", "root", "password");
-                        //PreparedStatement insert = connection.prepareStatement();
-			
-			//insert.setInt(1, 666666666);
-			//insert.setString(2, firstName);
-			
-			//insert.executeUpdate();
+                        PreparedStatement insert = connection.prepareStatement("");
 		}
 		catch (Exception e) {
 			e.printStackTrace();
