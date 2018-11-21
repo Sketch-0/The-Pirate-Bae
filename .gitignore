@@ -1,6 +1,8 @@
 **/nbproject/private/
 build/
+conf/
 nbbuild/
+nbproject/
 dist/
 nbdist/
 .nb-gradle/
