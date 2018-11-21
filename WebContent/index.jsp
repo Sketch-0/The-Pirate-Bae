@@ -1,10 +1,10 @@
-<<<<<<< Updated upstream
 <!DOCTYPE html>
 <html lang="en">
   <head>
       <%
           HttpSession sess = request.getSession();
           piratePackage.User member = (piratePackage.User) sess.getAttribute("member");
+          piratePackage.PirateUtility utility = new piratePackage.PirateUtility();          
           %>
     <title>Da Pirate Bae &mdash; The Nations Leading Streaming Service</title>
     <meta charset="utf-8">

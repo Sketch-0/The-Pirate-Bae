@@ -17,10 +17,10 @@
             
             if(isValid != -1){
                 login.setAttribute("member", new piratePackage.User(isValid));                
-                //redirect to main page
+                response.sendRedirect("index.jsp");
             }
             else{
-                //redirect to failed login page
+                response.sendRedirect("loginFailed.jsp");
             }
             
              out.println(login.getAttribute("member"));

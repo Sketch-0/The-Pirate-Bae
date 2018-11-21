@@ -5,12 +5,9 @@ import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-<<<<<<< Updated upstream
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-=======
->>>>>>> Stashed changes
 
 public class PirateUtility {
     
@@ -83,16 +80,15 @@ public class PirateUtility {
 		}
 	}
     	
-    public int getFavorites() {
-    	
+    public int getFavorites() {    	
     	return -1;
     }
     
     public Movie getMovie(String movieID) {
     	Movie movieBuffer = null;
     	try {
-			Class.forName("com.mysql.jdbc.Driver");			
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost/moviestoredb", "root", "password");			
+                Class.forName("com.mysql.jdbc.Driver");			
+                Connection con = DriverManager.getConnection("jdbc:mysql://localhost/moviestoredb", "root", "password");			
 
         	Statement st = con.createStatement();
 
@@ -114,9 +110,9 @@ public class PirateUtility {
         	}
             return movieBuffer;
         }
-    catch (Exception e) {
-            e.printStackTrace();
-    }
+        catch (Exception e) {
+                e.printStackTrace();
+        }
     return null;
     }
     
@@ -146,9 +142,9 @@ public class PirateUtility {
         	}
             return movieList;
         }
-    catch (Exception e) {
-            e.printStackTrace();
-    }
+        catch (Exception e) {
+                e.printStackTrace();
+        }
     return null;
     }
     
@@ -195,8 +191,8 @@ public class PirateUtility {
     
     public int getUserStarRating(String memberID, String movieID) {
     	try {
-    			Class.forName("com.mysql.jdbc.Driver");			
-    			Connection con = DriverManager.getConnection("jdbc:mysql://localhost/moviestoredb", "root", "password");			
+                Class.forName("com.mysql.jdbc.Driver");			
+                Connection con = DriverManager.getConnection("jdbc:mysql://localhost/moviestoredb", "root", "password");			
 
             	Statement st = con.createStatement();
 
@@ -214,8 +210,8 @@ public class PirateUtility {
     	List<Integer> ratings = new ArrayList<Integer>();
     	int ratingTotal = 0;
     	try {
-    			Class.forName("com.mysql.jdbc.Driver");			
-    			Connection con = DriverManager.getConnection("jdbc:mysql://localhost/moviestoredb", "root", "password");			
+                Class.forName("com.mysql.jdbc.Driver");			
+                Connection con = DriverManager.getConnection("jdbc:mysql://localhost/moviestoredb", "root", "password");			
 
             	Statement st = con.createStatement();
 
