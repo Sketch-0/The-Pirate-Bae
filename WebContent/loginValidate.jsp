@@ -1,4 +1,4 @@
-<%@page import="piratePackage.PirateUtility"%>
+<%@page import="piratePackage.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,22 +13,16 @@
             String enteredUsername = request.getParameter("username");
             String enteredPass = request.getParameter("password");
             
-            int isValid = PirateUtility.validate(enteredUsername, enteredPass);
+            int memberID = PirateUtility.validate(enteredUsername, enteredPass);
             
-            if(isValid != -1){
-                login.setAttribute("member", new piratePackage.User(isValid));                
+            if(memberID != -1){
+                login.setAttribute("member", new User(memberID));                
                 response.sendRedirect("index.jsp");
             }
-            else{
+            
+            else {
                 response.sendRedirect("loginFailed.jsp");
             }
-            
-             out.println(login.getAttribute("member"));
-            %>
-            
-            <form action="index.jsp">
-                <button>move</button>
-            </form>
-            
+        %>            
     </body>
 </html>

@@ -1,17 +1,22 @@
 package piratePackage;
 
+import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.*;
+import javax.servlet.jsp.JspWriter;
+import javax.swing.JTextPane;
 
-public class PirateUtility {
+
+public class PirateUtility extends HttpServlet {
     
     public static int validate(String username, String password){
+        
         try {
             Class.forName("com.mysql.jdbc.Driver");			
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost/moviestoredb", "root", "password");			
@@ -117,7 +122,7 @@ public class PirateUtility {
     }
     
     public ArrayList<Movie> getGenre(String genre) {
-    	ArrayList<Movie> movieList = null;
+    	ArrayList<Movie> movieList = new ArrayList<Movie>();
     	try {
 			Class.forName("com.mysql.jdbc.Driver");			
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost/moviestoredb", "root", "password");			
@@ -229,6 +234,47 @@ public class PirateUtility {
                 e.printStackTrace();
         }
         return -1;
+    }
+    
+    
+    public static void printMovies(ArrayList<Movie> movies, String genre, HttpServletResponse response) throws Exception{
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        
+        out.print("<div class= 'site-section block-13 bg-primary fixed overlay-primary bg-image' style= 'background-image: url('images/hero_bg_3.jpg');'  data-stellar-background-ratio='0.5'>)");
+
+        out.print("<div class='container'>");
+          out.print("<div class='row mb-5'>");
+            out.print("<div class='col-md-12 text-center'>");
+              out.print("<h2 id = 'A1' class='text-white'>Drama</h2>");
+            out.print("</div>");
+          out.print("</div>");
+
+          out.print("<div class='row'>");
+            out.print("<div class='nonloop-block-13 owl-carousel'>");
+
+              for (int i = 0; i < movies.size(); ++i){
+                  Movie currentMovie = movies.get(i);
+
+                  out.print("<div class='item'>");
+                    out.print("<div class='block-12'>");
+                      out.print("<figure>");
+                          out.print("<img src=" + currentMovie.getImage() + "alt='Image' class='img-fluid'>");
+                      out.print("</figure>");
+                      out.print("<div class='text'>");
+                          out.print("<span class='meta'> out.print(currentMovie.getReleaseDate()) </span>");
+                          out.print("<div class='text-inner'>");
+                         out.print("<h2 class='heading mb-3'><a href =" + currentMovie.getTrailer() + "class='text-black'></a>" + currentMovie.getTitle() + "</h2>");
+                         out.print("<p>" +  currentMovie.getDescription() + "</p>");
+                        out.print("</div>");
+                      out.print("</div>");
+                    out.print("</div>");
+                  out.print("</div>");
+              }
+
+            out.print("</div>");
+          out.print("</div>");
+                  
     }
     
 }
