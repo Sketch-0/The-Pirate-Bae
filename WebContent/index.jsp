@@ -1,10 +1,12 @@
 <!DOCTYPE html>
+<%@page import = "java.util.ArrayList"%>
+<%@page import = "piratePackage.*"%>
 <html lang="en">
   <head>
       <%
           HttpSession sess = request.getSession();
-          piratePackage.User member = (piratePackage.User) sess.getAttribute("member");
-          piratePackage.PirateUtility utility = new piratePackage.PirateUtility();          
+          User user = (User) sess.getAttribute("member");
+          PirateUtility utility = new PirateUtility();          
           %>
     <title>Da Pirate Bae &mdash; The Nations Leading Streaming Service</title>
     <meta charset="utf-8">
@@ -49,1723 +51,42 @@
               <a href="#" class="text-secondary px-2 pl-0"><span class="icon-facebook"></span></a>
               <a href="#" class="text-secondary px-2"><span class="icon-instagram"></span></a>
               <a href="#" class="text-secondary px-2"><span class="icon-twitter"></span></a>
-              <a href="#" class="text-secondary px-2"><span class="icon-linkedin"></span></a>
-            </div>
-            <div class="col-6 col-md-9 text-right">
-              <div class="d-inline-block"><a href="#" class="text-secondary p-2 d-flex align-items-center"><span class="icon-envelope mr-3"></span> <span class="d-none d-md-block">youremail@domain.com</span></a></div>
-              <div class="d-inline-block"><a href="#" class="text-secondary p-2 d-flex align-items-center"><span class="icon-phone mr-0 mr-md-3"></span> <span class="d-none d-md-block">+1 232 3532 321</span></a></div>
+
+           <div class="mb-5">
+             <form action="#" method="post">
+               <div class="input-group mb-3">
+                 <input type="text" placeholder="Search" aria-describedby="button-addon2">
+                 <div class="input-group-append">
+                   <button class="btn btn-primary" type="button" id="button-addon2">Send</button>
+                 </div>
+               </div>
+             </form>
+           </div>
+		   
             </div>
           </div>
         </div>
       </div>
       <nav class="site-navigation position-relative text-right bg-black text-md-right" role="navigation">
+		  
         <div class="container position-relative">
           <div class="site-logo">
-            <a href="index.html"><img src="images/logo.png" alt=""></a>
+            <a href="index.jsp"><img src="images/logo.png" alt=""></a>
           </div>
 
           <div class="d-inline-block d-md-none ml-md-0 mr-auto py-3"><a href="#" class="site-menu-toggle js-menu-toggle text-white"><span class="icon-menu h3"></span></a></div>
 
           <ul class="site-menu js-clone-nav d-none d-md-block">
-            <li class="has-children active">
-              <a href="index.html">Home</a>
-              <ul class="dropdown arrow-top">
-                <li><a href="#">Menu One</a></li>
-                <li><a href="#">Menu Two</a></li>
-                <li><a href="#">Menu Three</a></li>
-                <li class="has-children">
-                  <a href="#">Sub Menu</a>
-                  <ul class="dropdown">
-                    <li><a href="#">Menu One</a></li>
-                    <li><a href="#">Menu Two</a></li>
-                    <li><a href="#">Menu Three</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
+             <li><a href="index.html"><b>Home</b></a> </li>
             <li class="has-children">
-              <a href="news.html">News</a>
+              <a>Genre</a>
               <ul class="dropdown arrow-top">
-                <li><a href="#">Menu One</a></li>
-                <li><a href="#">Menu Two</a></li>
-                <li><a href="#">Menu Three</a></li>
-              </ul>
-            </li>
-            <li><a href="matches.html">Matches</a></li>
-            <li><a href="team.html">Team</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="contact.html">Contact</a></li>
-          </ul>
-        </div>
-      </nav>
-    </header>
-    
-
-
-    <div class="slide-one-item home-slider owl-carousel">
-      <div class="site-blocks-cover overlay" style="background-image: url(images/theFlash.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
-        <div class="container">
-          <div class="row align-items-center justify-content-start">
-			  <p><a href="#" class="btn btn-primary btn-sm rounded-0 py-3 px-5">Watch now</a></p>
-          </div>
-        </div>
-      </div>  
-
-      <div class="site-blocks-cover overlay" style="background-image: url(images/shameless.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
-        <div class="container">
-          <div class="row align-items-center justify-content-start">
-			  <p><a href="#" class="btn btn-primary btn-sm rounded-0 py-3 px-5">Watch now</a></p>
-          </div>
-        </div>
-      </div>  
-
-      <div class="site-blocks-cover overlay" style="background-image: url(images/TheBlacklist.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
-        <div class="container">
-          <div class="row align-items-center justify-content-start">
-            <div class="col-md-6 text-center text-md-left" data-aos="fade-up" data-aos-delay="400">
-              <p><a href="#" class="btn btn-primary btn-sm rounded-0 py-3 px-5">Watch now</a></p>
-            </div>
-          </div>
-        </div>
-      </div>  
-    </div>
-    
-
-    <div class="site-blocks-vs site-section bg-light">
-      <div class="container">
-
-        <div class="border mb-3 rounded d-block d-lg-flex align-items-center p-3 next-match">
-          
-          <div class="mr-auto order-md-1 w-60 text-center text-lg-left mb-3 mb-lg-0">
-            All new shameless in
-            <div id="date-countdown"></div>
-          </div>
-
-          <div class="ml-auto pr-4 order-md-2">
-            <div class="h5 text-black text-uppercase text-center text-lg-left">
-               <div class="bg-image overlay-success rounded mb-7" style="background-image: url('images/shameless.jpg');" data-stellar-background-ratio="0.5">
-              </div>
-			  <span class="d-block d-md-inline-block ml-0 ml-md-3 ml-lg-0">Shameless </span>
-            </div>
-          </div>
-        </div>
-		
-		
-		
-		  <!-- ACTION GENRE STARTS HERE -->
-
-    <div class="site-section block-13 bg-primary fixed overlay-primary bg-image" style="background-image: url('images/hero_bg_3.jpg');"  data-stellar-background-ratio="0.5">
-
-      <div class="container">
-        <div class="row mb-5">
-          <div class="col-md-12 text-center">
-            <h2 class="text-white">Action</h2>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="nonloop-block-13 owl-carousel">
-        <div class="item">
-          <!-- uses .block-12 -->
-          <div class="block-12">
-            <figure>
-              <img src="images/action/DeadPool.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/action/InfinityWar.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/action/ReadyPlayerOne.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/action/Venom.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <!-- uses .block-12 -->
-          <div class="block-12">
-            <figure>
-              <img src="images/img_1.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_2.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_3.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_4.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <!-- uses .block-12 -->
-          <div class="block-12">
-            <figure>
-              <img src="images/img_1.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_2.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_3.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_4.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <!-- uses .block-12 -->
-          <div class="block-12">
-            <figure>
-              <img src="images/img_1.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_2.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_3.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_4.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-      </div>
-        </div>
-      </div>      
-    </div>
-
-<!-- ACTION GENRE ENDS HERE -->
-
-
-
-
-
-		  <!-- ROMANCE GENRE STARTS HERE -->
-
-    <div class="site-section block-13 bg-primary fixed overlay-primary bg-image" style="background-image: url('images/hero_bg_3.jpg');"  data-stellar-background-ratio="0.5">
-
-      <div class="container">
-        <div class="row mb-5">
-          <div class="col-md-12 text-center">
-            <h2 class="text-white">Romance</h2>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="nonloop-block-13 owl-carousel">
-        <div class="item">
-          <!-- uses .block-12 -->
-          <div class="block-12">
-            <figure>
-              <img src="images/romance/CRA.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/romance/ForeverMyGirl.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/romance/LoveSimon.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/romance/ToAllTheBoys.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <!-- uses .block-12 -->
-          <div class="block-12">
-            <figure>
-              <img src="images/img_1.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_2.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_3.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_4.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <!-- uses .block-12 -->
-          <div class="block-12">
-            <figure>
-              <img src="images/img_1.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_2.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_3.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_4.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <!-- uses .block-12 -->
-          <div class="block-12">
-            <figure>
-              <img src="images/img_1.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_2.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_3.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_4.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-      </div>
-        </div>
-      </div>      
-    </div>
-
-<!-- ROMANCE GENRE ENDS HERE -->
-
-
-
-
-
-
-
-		  <!-- HORROR GENRE STARTS HERE -->
-
-    <div class="site-section block-13 bg-primary fixed overlay-primary bg-image" style="background-image: url('images/hero_bg_3.jpg');"  data-stellar-background-ratio="0.5">
-
-      <div class="container">
-        <div class="row mb-5">
-          <div class="col-md-12 text-center">
-            <h2 class="text-white">Horror</h2>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="nonloop-block-13 owl-carousel">
-        <div class="item">
-          <!-- uses .block-12 -->
-          <div class="block-12">
-            <figure>
-              <img src="images/Horror/get_out.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/Horror/It-movie.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/Horror/quiet_place.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/Horror/the_nun.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <!-- uses .block-12 -->
-          <div class="block-12">
-            <figure>
-              <img src="images/img_1.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_2.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_3.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_4.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <!-- uses .block-12 -->
-          <div class="block-12">
-            <figure>
-              <img src="images/img_1.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_2.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_3.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_4.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <!-- uses .block-12 -->
-          <div class="block-12">
-            <figure>
-              <img src="images/img_1.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_2.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_3.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_4.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-      </div>
-        </div>
-      </div>      
-    </div>
-
-<!-- HORROR GENRE ENDS HERE -->
-
-
-
-
-
-
-
-		  <!-- COMEDY GENRE STARTS HERE -->
-
-    <div class="site-section block-13 bg-primary fixed overlay-primary bg-image" style="background-image: url('images/hero_bg_3.jpg');"  data-stellar-background-ratio="0.5">
-
-      <div class="container">
-        <div class="row mb-5">
-          <div class="col-md-12 text-center">
-            <h2 class="text-white">Comedy</h2>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="nonloop-block-13 owl-carousel">
-        <div class="item">
-          <!-- uses .block-12 -->
-          <div class="block-12">
-            <figure>
-              <img src="images/Comedy/game_night.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/Comedy/hangover4.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/Comedy/night_school.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/Comedy/spy_who_dumped_me.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <!-- uses .block-12 -->
-          <div class="block-12">
-            <figure>
-              <img src="images/img_1.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_2.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_3.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_4.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <!-- uses .block-12 -->
-          <div class="block-12">
-            <figure>
-              <img src="images/img_1.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_2.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_3.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_4.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <!-- uses .block-12 -->
-          <div class="block-12">
-            <figure>
-              <img src="images/img_1.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_2.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_3.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_4.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-      </div>
-        </div>
-      </div>      
-    </div>
-
-<!-- COMEDY GENRE ENDS HERE -->
-
-
-
-
-
-
-
-
-		  <!-- DOCUMENTARY GENRE STARTS HERE -->
-
-    <div class="site-section block-13 bg-primary fixed overlay-primary bg-image" style="background-image: url('images/hero_bg_3.jpg');"  data-stellar-background-ratio="0.5">
-
-      <div class="container">
-        <div class="row mb-5">
-          <div class="col-md-12 text-center">
-            <h2 class="text-white">Documentary</h2>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="nonloop-block-13 owl-carousel">
-        <div class="item">
-          <!-- uses .block-12 -->
-          <div class="block-12">
-            <figure>
-              <img src="images/Documentary/a_river_below.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/Documentary/amanda_knox.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/Documentary/Cartel_Land.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/Documentary/DarkMoney.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <!-- uses .block-12 -->
-          <div class="block-12">
-            <figure>
-              <img src="images/img_1.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_2.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_3.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_4.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <!-- uses .block-12 -->
-          <div class="block-12">
-            <figure>
-              <img src="images/img_1.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_2.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_3.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_4.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <!-- uses .block-12 -->
-          <div class="block-12">
-            <figure>
-              <img src="images/img_1.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_2.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_3.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/img_4.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-      </div>
-        </div>
-      </div>      
-    </div>
-
-<!-- DOCUMENTARY GENRE ENDS HERE -->
-
-
-
-
-
-
-    <div class="site-section">
-      <div class="container">
-        <div class="row mb-5">
-          <div class="col-md-12 text-center">
-            <h2 class="text-black">Latest News</h2>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6 col-lg-4">
-            <div class="post-entry">
-              <div class="image">
-                <img src="images/img_1.jpg" alt="Image" class="img-fluid">
-              </div>
-              <div class="text p-4">
-                <h2 class="h5 text-black"><a href="#">RealMad vs Striker Who Will Win?</a></h2>
-                <span class="text-uppercase date d-block mb-3"><small>By Colorlib &bullet; Sep 25, 2018</small></span>
-                <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat beatae doloremque, ex corrupti perspiciatis.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4">
-            <div class="post-entry">
-              <div class="image">
-                <img src="images/img_2.jpg" alt="Image" class="img-fluid">
-              </div>
-              <div class="text p-4">
-                <h2 class="h5 text-black"><a href="#">RealMad vs Striker Who Will Win?</a></h2>
-                <span class="text-uppercase date d-block mb-3"><small>By Colorlib &bullet; Sep 25, 2018</small></span>
-                <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat beatae doloremque, ex corrupti perspiciatis.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4">
-            <div class="post-entry">
-              <div class="image">
-                <img src="images/img_3.jpg" alt="Image" class="img-fluid">
-              </div>
-              <div class="text p-4">
-                <h2 class="h5 text-black"><a href="#">RealMad vs Striker Who Will Win?</a></h2>
-                <span class="text-uppercase date d-block mb-3"><small>By Colorlib &bullet; Sep 25, 2018</small></span>
-                <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat beatae doloremque, ex corrupti perspiciatis.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    
-    
-    <footer class="site-footer border-top">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-4">
-            <div class="mb-5">
-              <h3 class="footer-heading mb-4">About Sportz</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe pariatur reprehenderit vero atque, consequatur id ratione, et non dignissimos culpa? Ut veritatis, quos illum totam quis blanditiis, minima minus odio!</p>
-            </div>
-
-            <div class="mb-5">
-              <h3 class="footer-heading mb-4">Recent Blog</h3>
-              <div class="block-25">
-                <ul class="list-unstyled">
-                  <li class="mb-3">
-                    <a href="#" class="d-flex">
-                      <figure class="image mr-4">
-                        <img src="images/img_1.jpg" alt="" class="img-fluid">
-                      </figure>
-                      <div class="text">
-                        <h3 class="heading font-weight-light">Lorem ipsum dolor sit amet consectetur elit</h3>
-                      </div>
-                    </a>
-                  </li>
-                  <li class="mb-3">
-                    <a href="#" class="d-flex">
-                      <figure class="image mr-4">
-                        <img src="images/img_1.jpg" alt="" class="img-fluid">
-                      </figure>
-                      <div class="text">
-                        <h3 class="heading font-weight-light">Lorem ipsum dolor sit amet consectetur elit</h3>
-                      </div>
-                    </a>
-                  </li>
-                  <li class="mb-3">
-                    <a href="#" class="d-flex">
-                      <figure class="image mr-4">
-                        <img src="images/img_1.jpg" alt="" class="img-fluid">
-                      </figure>
-                      <div class="text">
-                        <h3 class="heading font-weight-light">Lorem ipsum dolor sit amet consectetur elit</h3>
-                      </div>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            
-          </div>
-          <div class="col-lg-4 mb-5 mb-lg-0">
-            <div class="row mb-5">
-              <div class="col-md-12">
-                <h3 class="footer-heading mb-4">Quick Menu</h3>
-              </div>
-              <div class="col-md-6 col-lg-6">
-                <ul class="list-unstyled">
-                  <li><a href="#">Home</a></li>
-                  <li><a href="#">Matches</a></li>
-                  <li><a href="#">News</a></li>
-                  <li><a href="#">Team</a></li>
-                </ul>
-              </div>
-              <div class="col-md-6 col-lg-6">
-                <ul class="list-unstyled">
-                  <li><a href="#">About Us</a></li>
-                  <li><a href="#">Privacy Policy</a></li>
-                  <li><a href="#">Contact Us</a></li>
-                  <li><a href="#">Membership</a></li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-md-12">
-                <h3 class="footer-heading mb-4">Follow Us</h3>
-
-                <div>
-                  <a href="#" class="pl-0 pr-3"><span class="icon-facebook"></span></a>
-                  <a href="#" class="pl-3 pr-3"><span class="icon-twitter"></span></a>
-                  <a href="#" class="pl-3 pr-3"><span class="icon-instagram"></span></a>
-                  <a href="#" class="pl-3 pr-3"><span class="icon-linkedin"></span></a>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="col-lg-4 mb-5 mb-lg-0">
-            <div class="mb-5">
-              <h3 class="footer-heading mb-4">Watch Trailer</h3>
-
-              <div class="block-16">
-                <figure>
-                  <img src="images/img_1.jpg" alt="Image placeholder" class="img-fluid rounded">
-                  <a href="https://vimeo.com/channels/staffpicks/93951774" class="play-button popup-vimeo"><span class="icon-play"></span></a>
-                </figure>
-              </div>
-
-            </div>
-
-            <div class="mb-5">
-              <h3 class="footer-heading mb-2">Subscribe Newsletter</h3>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit minima minus odio.</p>
-
-              <form action="#" method="post">
-                <div class="input-group mb-3">
-                  <input type="text" class="form-control border-secondary text-white bg-transparent" placeholder="Enter Email" aria-label="Enter Email" aria-describedby="button-addon2">
-                  <div class="input-group-append">
-                    <button class="btn btn-primary" type="button" id="button-addon2">Send</button>
-                  </div>
-                </div>
-              </form>
-
-            </div>
-
-          </div>
-          
-        </div>
-        <div class="row pt-5 mt-5 text-center">
-          <div class="col-md-12">
-            <p>
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy;<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            </p>
-          </div>
-          
-        </div>
-      </div>
-    </footer>
-  </div>
-
-  <script src="js/jquery-3.3.1.min.js"></script>
-  <script src="js/jquery-migrate-3.0.1.min.js"></script>
-  <script src="js/jquery-ui.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/owl.carousel.min.js"></script>
-  <script src="js/jquery.stellar.min.js"></script>
-  <script src="js/jquery.countdown.min.js"></script>
-  <script src="js/jquery.magnific-popup.min.js"></script>
-  <script src="js/aos.js"></script>
-
-  <script src="js/main.js"></script>
-    
-  </body>
-=======
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-      <%
-          /*
-          HttpSession login = request.getSession();
-          piratePackage.User currentUser = (piratePackage.User)login.getAttribute("member");
-          if (currentUser != null){
-              out.print(currentUser.getMemberID());
-          }
-          else{
-              out.print("failed");
-          }
-          */
-          %>
-    <title>Da Pirate Bae &mdash; The Nations Leading Streaming Service</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700"> 
-    <link rel="stylesheet" href="fonts/icomoon/style.css">
-
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
-    <link rel="stylesheet" href="css/jquery-ui.css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css">
-
-
-    <link rel="stylesheet" href="css/aos.css">
-
-    <link rel="stylesheet" href="css/style.css">
-    
-  </head>
-  <body>
-  
-  <div class="site-wrap">
-
-    <div class="site-mobile-menu">
-      <div class="site-mobile-menu-header">
-        <div class="site-mobile-menu-logo">
-          <a href="#"><img src="images/logo.png" alt="Image"></a>
-        </div>
-        <div class="site-mobile-menu-close mt-3">
-          <span class="icon-close2 js-menu-toggle"></span>
-        </div>
-      </div>
-      <div class="site-mobile-menu-body"></div>
-    </div>
-
-    <header class="site-navbar absolute transparent" role="banner">
-      <div class="py-3">
-        <div class="container">
-          <div class="row align-items-center">
-            <div class="col-6 col-md-3">
-              <a href="#" class="text-secondary px-2 pl-0"><span class="icon-facebook"></span></a>
-              <a href="#" class="text-secondary px-2"><span class="icon-instagram"></span></a>
-              <a href="#" class="text-secondary px-2"><span class="icon-twitter"></span></a>
-              <a href="#" class="text-secondary px-2"><span class="icon-linkedin"></span></a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <nav class="site-navigation position-relative text-right bg-black text-md-right" role="navigation">
-        <div class="container position-relative">
-          <div class="site-logo">
-            <a href="index.html"><img src="images/logo.png" alt=""></a>
-          </div>
-
-          <div class="d-inline-block d-md-none ml-md-0 mr-auto py-3"><a href="#" class="site-menu-toggle js-menu-toggle text-white"><span class="icon-menu h3"></span></a></div>
-
-          <ul class="site-menu js-clone-nav d-none d-md-block">
-           
-              <a href="index.html"><b>Home</b></a>
-              
-                        "<a href="login.jsp"><b>Login</b></a>"
-                  
-            <li class="has-children">
-              <a href="genre.html">Genre</a>
-              <ul class="dropdown arrow-top">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Comedy</a></li>
-                <li><a href="#">Drama</a></li>
-				<li><a href="#">Horror</a></li>
-				<li><a href="#">Sci-Fi</a></li>
+		<li><a href="#F1">Favorites</a></li>
+                <li><a href="#A1">Action</a></li>
+                <li><a href="#C1">Comedy</a></li>
+                <li><a href="#D1">Drama</a></li>
+		<li><a href="#H1">Horror</a></li>
+		<li><a href="#S1">Sci-Fi</a></li>
               </ul>
             </li>
             <li><a href="about.html">About</a></li>
@@ -1781,7 +102,7 @@
       <div class="site-blocks-cover overlay" style="background-image: url(images/Action/The_Avengers.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
         <div class="container">
           <div class="row align-items-center justify-content-start">
-			  <p><a href="https://www.w3schools.com" class="btn btn-primary btn-sm rounded-0 py-3 px-5">Watch now</a></p>
+			  <p><a href="http://www.youtube.com/watch?v=eOrNdBpGMv8" class="btn btn-primary btn-sm rounded-0 py-3 px-5">Watch now</a></p>
           </div>
         </div>
       </div>  
@@ -1789,7 +110,7 @@
       <div class="site-blocks-cover overlay" style="background-image: url(images/Comedy/Anger_Management.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
         <div class="container">
           <div class="row align-items-center justify-content-start">
-			  <p><a href="https://www.w3schools.com" class="btn btn-primary btn-sm rounded-0 py-3 px-5">Watch now</a></p>
+			  <p><a href="http://www.imdb.com/video/screenplay/vi3853910297/" class="btn btn-primary btn-sm rounded-0 py-3 px-5">Watch now</a></p>
           </div>
         </div>
       </div>  
@@ -1798,7 +119,7 @@
         <div class="container">
           <div class="row align-items-center justify-content-start">
             <div class="col-md-6 text-center text-md-left" data-aos="fade-up" data-aos-delay="400">
-              <p><a href="https://www.w3schools.com" class="btn btn-primary btn-sm rounded-0 py-3 px-5">Watch now</a></p>
+              <p><a href="Birdy" class="btn btn-primary btn-sm rounded-0 py-3 px-5">Watch now</a></p>
             </div>
           </div>
         </div>
@@ -1807,16 +128,17 @@
    		
 		
 		
+		<div>
 		  <!-- ACTION GENRE STARTS HERE -->
     <div class="site-section block-13 bg-primary fixed overlay-primary bg-image" style="background-image: url('images/hero_bg_3.jpg');"  data-stellar-background-ratio="0.5">
 
       <div class="container">
         <div class="row mb-5">
           <div class="col-md-12 text-center">
-            <h2 class="text-white">Action</h2>
+            <h2 id = "A1" class="text-white">Action</h2>
           </div>
         </div>
-
+	
 
         <div class="row">
           <div class="nonloop-block-13 owl-carousel">
@@ -1824,13 +146,28 @@
           <!-- uses .block-12 -->
           <div class="block-12">
             <figure>
-           <img src="images/Action/Assassins.jpg" alt="Image" class="img-fluid">
+        <img src="images/Action/Assassins.jpg" alt="Image" class="img-fluid">
             </figure>
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Assassins</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+             <h2 class="heading mb-3"><a href = 	"http://www.imdb.com/video/screenplay/vi4038525209/"class="text-black">Assassins</a></h2>
+                <p>Robert Rath (Sylvester Stallone) is a seasoned hitman who just wants out of the business with no back talk… FFFIIIIIINNNNNNNNSSSSSSHHHHHHHHHH</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="block-12">
+            <figure>
+            <img src="images/Action/The_Avengers.jpg" alt="Image" class="img-fluid">
+            </figure>
+            <div class="text">
+              <span class="meta">May 20th 2018</span>
+              <div class="text-inner">
+                <h2 class="heading mb-3"><a href = "http://www.youtube.com/watch?v=eOrNdBpGMv8" class="text-black">The Avengers</a></h2>
+                <p>Nick Fury of S.H.I.E.L.D. brings together a team of super humans to form The Avengers to help save the Earth from Loki and his army.</p>
               </div>
             </div>
           </div>
@@ -1839,32 +176,18 @@
         <div class="item">
           <div class="block-12">
             <figure>
-              <img src="images/Action/Terminator2.jpg" alt="Image" class="img-fluid">
+            <img src="images/Action/Terminator2.jpg" alt="Image" class="img-fluid">
             </figure>
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href = "http://www.youtube.com/watch?v=oL1RE8JXaIw" class="text-black">Terminator 2: Judgment Day</a></h2>
+                <p>The cyborg who once tried to kill Sarah Connor is dead, and another T-101 must now protect her teenage son, John Connor, from an even more powerful and advanced Terminator, the T-1000.</p>
               </div>
             </div>
           </div>
         </div>
-
-        <div class="item">
-          <div class="block-12">
-            <figure>
-              <img src="images/Action/The_Avengers.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">World Cup Championship</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
-              </div>
-            </div>
-          </div>
-        </div>
+		
 <!-- ACTION GENRE ENDS HERE -->
 </div>
 <span style="border:1px solid white;height=27px;width=17px"></span>
@@ -1874,7 +197,6 @@
 
 
 
-<div style="background-color:grey;color:white;padding:20px;">
 	
 		  <!-- COMEDY GENRE STARTS HERE -->
 
@@ -1883,7 +205,7 @@
       <div class="container">
         <div class="row mb-5">
           <div class="col-md-12 text-center">
-            <h2 class="text-white">Comedy</h2>
+            <h2 id = "C1" class="text-white">Comedy</h2>
           </div>
         </div>
 
@@ -1898,8 +220,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black"> Anger Management</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi3853910297/" class="text-black"> Anger Management</a></h2>
+                <p>Sandler plays a businessman who is wrongly sentenced to an anger-management program where he meets an aggressive instructor.</p>
               </div>
             </div>
           </div>
@@ -1913,8 +235,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Arizona Dream</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.youtube.com/watch?v=5xgHBIHUqfc" class="text-black">Arizona Dream</a></h2>
+                <p>An Innuit hunter races his sled home with a fresh-caught halibut. This fish pervades the entire film...  FINISHHHHHHHHHHH</p>
               </div>
             </div>
           </div>
@@ -1928,8 +250,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">As Good As It Gets</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.youtube.com/watch?v=BXHxg6Ug9GM" class="text-black">As Good As It Gets</a></h2>
+                <p>A single mother/waitress a misanthropic author and a gay artist form an unlikely friendship</p>
               </div>
             </div>
           </div>
@@ -1943,8 +265,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Being John Malkovich</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi3778520089/" class="text-black">Being John Malkovich</a></h2>
+                <p>A puppeteer discovers a portal that leads literally into the head of the movie star John Malkovich.</p>
               </div>
             </div>
           </div>
@@ -1958,8 +280,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Birthday Girl</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi1743691289/" class="text-black">Birthday Girl</a></h2>
+                <p>A thirtysomething bank clerk from St Albans has his small-town life exploded by the arrival of his Russian mail-order bride.</p>
               </div>
             </div>
           </div>
@@ -1973,8 +295,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Buffalo 66</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi1102840089/" class="text-black">Buffalo 66</a></h2>
+                <p>Billy is released after five years in prison. In the next moment he kidnaps teenage student Layla and visits his parents with her...FFFFFFIIIIIIISSSSSSSSSHHHHHHHHH</p>
               </div>
             </div>
           </div>
@@ -1990,7 +312,6 @@
 
 
 
-<div style="background-color:grey;color:white;padding:20px;">
 		  <!-- DRAMA GENRE STARTS HERE -->
 
     <div class="site-section block-13 bg-primary fixed overlay-primary bg-image" style="background-image: url('images/hero_bg_3.jpg');"  data-stellar-background-ratio="0.5">
@@ -1998,7 +319,7 @@
       <div class="container">
         <div class="row mb-5">
           <div class="col-md-12 text-center">
-            <h2 class="text-white">Drama</h2>
+            <h2 id = "D1" class="text-white">Drama</h2>
           </div>
         </div>
 
@@ -2013,8 +334,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">11.14.00</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi2326987033/" class="text-black">11.14.00</a></h2>
+                <p>Tells the seemingly random yet vitally connected story of a set of incidents that all converge one evening at 11:14pm. The story follows the chain of events of five different characters and five different storylines that all converge to tell the story of murder and deceit.</p>
               </div>
             </div>
           </div>
@@ -2028,8 +349,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">21 Grams</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi3383951641/" class="text-black">21 Grams</a></h2>
+                <p>A freak accident brings together a critically ill mathematician (Penn) a grieving mother (Watts) and a born-again ex-con (Del Toro).</p>
               </div>
             </div>
           </div>
@@ -2043,8 +364,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">25th Hour</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi3350397209/" class="text-black">25th Hour</a></h2>
+                <p>Cornered by the DEA convicted New York drug dealer Montgomery Brogan (Norton) reevaluates his life in the 24 remaining hours before facing a seven-year jail term.</p>
               </div>
             </div>
           </div>
@@ -2058,8 +379,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">A Beautiful Mind</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi2279866649/" class="text-black">A Beautiful Mind</a></h2>
+                <p>After a brilliant but asocial mathematician accepts secret work in cryptography his life takes a turn to the nightmarish.</p>
               </div>
             </div>
           </div>
@@ -2073,8 +394,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">A Broxn Tale</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.youtube.com/watch?v=1bkIqZfviXU" class="text-black">A Broxn Tale</a></h2>
+                <p>A father becomes worried when a local gangster befriends his son in the Bronx in the 1960s.</p>
               </div>
             </div>
           </div>
@@ -2088,8 +409,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">A Few Good Men</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi2142503193/" class="text-black">A Few Good Men</a></h2>
+                <p>Neo military lawyer Kaffee defends Marines accused of murder; they contend they were acting under orders.</p>
               </div>
             </div>
           </div>
@@ -2103,8 +424,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Always OutNumbered</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.youtube.com/watch?v=bMgLHo1phOw" class="text-black">Always OutNumbered</a></h2>
+                <p>An ex-con moves to L.A. to find work and creates a disturbance by fighting for a position.</p>
               </div>
             </div>
           </div>
@@ -2118,8 +439,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Amadeus</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi2535496985/" class="text-black">Amadeus</a></h2>
+                <p>The incredible story of Wolfgang Amadeus Mozart told in flashback mode by Antonio Salieri - now confined to an insane asylum.</p>
               </div>
             </div>
           </div>
@@ -2133,8 +454,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">American Beauty</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi917897497/" class="text-black">American Beauty</a></h2>
+                <p>Lester Burnham a depressed suburban father in a mid-life crisis decides to turn his hectic life around after developing an infatuation for his daughter's attractive friend.</p>
               </div>
             </div>
           </div>
@@ -2148,8 +469,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">American History X</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi854001177/" class="text-black">American History X</a></h2>
+                <p>A former neo-nazi skinhead (Norton) tries to prevent his younger brother (Furlong) from going down the same wrong path that he did.</p>
               </div>
             </div>
           </div>
@@ -2163,8 +484,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Amistad</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi2161771289/" class="text-black">Amistad</a></h2>
+                <p>AMISTAD is about a 1839 mutiny aboard a slave ship that is traveling towards the Northeast Coast of America. Much of the story involves a court-room 1 about the free-man who led the revolt.</p>
               </div>
             </div>
           </div>
@@ -2178,8 +499,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Amores Perros</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.youtube.com/watch?v=XToRtfQbeHg" class="text-black">Amores Perros</a></h2>
+                <p>A horrific car accident connects three stories each involving characters dealing with loss regret and life's harsh realities all in the name of love.</p>
               </div>
             </div>
           </div>
@@ -2193,8 +514,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Any Given Sunday</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.youtube.com/watch?v=RN7sKvaHDlA" class="text-black">Any Given Sunday</a></h2>
+                <p>Any Given Sunday is a behind the scenes look at the life and death struggles of modern day gladiators and those who lead them.</p>
               </div>
             </div>
           </div>
@@ -2208,8 +529,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Arlington Road</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.youtube.com/watch?v=nk2CPzIgBRo" class="text-black">Arlington Road</a></h2>
+                <p>A college professor begins to suspect that his neighbour is a terrorist.</p>
               </div>
             </div>
           </div>
@@ -2223,8 +544,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">At First Sight</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.youtube.com/watch?v=os50D-aOZQo" class="text-black">At First Sight</a></h2>
+                <p>A blind man has an operation to regain his sight at the urging of his girlfriend and must deal with the changes to his life.</p>
               </div>
             </div>
           </div>
@@ -2238,8 +559,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Autumn In New York</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.youtube.com/watch?v=zACckn8ie-8" class="text-black">Autumn In New York</a></h2>
+                <p>Romantic 1 about an aging playboy who falls for a sweet but terminally ill young woman.</p>
               </div>
             </div>
           </div>
@@ -2253,8 +574,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Awakenings</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi1387790617/" class="text-black">Awakenings</a></h2>
+                <p>The victims of an encephalitis epidemic many years ago have been catatonic ever since but now a new drug offers the prospect of reviving them.</p>
               </div>
             </div>
           </div>
@@ -2268,8 +589,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black"> Babel </a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi2058879257/" class="text-black"> Babel </a></h2>
+                <p>Tragedy strikes a married couple on vacation in the Moroccan desert touching off an interlocking story involving four different families.</p>
               </div>
             </div>
           </div>
@@ -2283,8 +604,9 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Bang Bang You're Dead</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.cinemagia.ro/trailer/bang-bang-youre-dead-5882/" class="text-black">Bang Bang You're Dead</a></h2>
+                <p>For the most part it's a tale of a kid Trevor who gets picked on a lot a school. Not as much as he used to... FIIIIIIINNNNNNNSSSSSSSSSHHHHHHHHHHH
+</p>
               </div>
             </div>
           </div>
@@ -2298,8 +620,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Basic</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi112787737/" class="text-black">Basic</a></h2>
+                <p>A DEA agent investigates the disappearance of a legendary Army ranger drill sergeant and several of his cadets during a training exercise gone severely awry.</p>
               </div>
             </div>
           </div>
@@ -2313,8 +635,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Basic Instinct</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi129564953/" class="text-black">Basic Instinct</a></h2>
+                <p>A police detective is in charge of the investigation of a brutal murder in which a beautiful and seductive woman could be involved.</p>
               </div>
             </div>
           </div>
@@ -2328,8 +650,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Before Sunset</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi2813919513/" class="text-black">Before Sunset</a></h2>
+                <p>It's nine years after Jesse and Celine first met; now they encounter one another on the French leg of Jesse's book tour.</p>
               </div>
             </div>
           </div>
@@ -2343,8 +665,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Best Laid Plans</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi364511513/" class="text-black">Best Laid Plans</a></h2>
+                <p>Ever feel like the world is conspiring against you... You don't have to tell me where you've been... Everyone sucks but us... keeping a relationship alive can be murder.</p>
               </div>
             </div>
           </div>
@@ -2358,8 +680,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Big Fish</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi1522139417/" class="text-black">Big Fish</a></h2>
+                <p>A story about a son trying to learn more about his dying father by reliving stories and myths his father told him about himself.</p>
               </div>
             </div>
           </div>
@@ -2373,8 +695,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Birdy</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi1840906521/" class="text-black">Birdy</a></h2>
+                <p>Two friends arrive back from Vietnam scarred in different ways. One has physical injuries the other...FFFFIIIIIIIIINNNNNNNNNNSSSSSSSSHHHHHHHHHH</p>
               </div>
             </div>
           </div>
@@ -2388,8 +710,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Blow</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi3504603417/" class="text-black">Blow</a></h2>
+                <p>The story of George Jung the man who established the American cocaine market in the 1970's.</p>
               </div>
             </div>
           </div>
@@ -2403,8 +725,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Boss of Bosses</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.youtube.com/watch?v=shSjnxcY1I8" class="text-black">Boss of Bosses</a></h2>
+                <p>The story of the rise and fall of the powerful New York City organized crime boss Paul Castellano.</p>
               </div>
             </div>
           </div>
@@ -2418,8 +740,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Bounce</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi2548997657/" class="text-black">Bounce</a></h2>
+                <p>A man switches plane tickets with another man who dies in that plane in a crash. The man falls in love with the deceased one's wife.</p>
               </div>
             </div>
           </div>
@@ -2433,8 +755,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Bringing Out The Dead</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi1002176793/" class="text-black">Bringing Out The Dead</a></h2>
+                <p>Frank Pierce is a paramedic working Gotham's Hell's Kitchen. He's become burned out and haunted by visions of the people he's tried to save.</p>
               </div>
             </div>
           </div>
@@ -2448,8 +770,23 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Carandiru</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi3971744025/" class="text-black">Carandiru</a></h2>
+                <p>Film based on real life experiences of doctor Drauzio Varella inside dreadful State penitentiary Carandiru...FFFFFFIIIIIIIIIIIIIINNNNNNNNSSSSSSSSHHHHHHH</p>
+              </div>
+            </div>
+          </div>
+        </div>
+		
+        <div class="item">
+          <div class="block-12">
+            <figure>
+              <img src="images/Drama/Carlito's_Way.jpg" alt="Image" class="img-fluid">
+            </figure>
+            <div class="text">
+              <span class="meta">May 20th 2018</span>
+              <div class="text-inner">
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi431816985/" class="text-black">Carlito's Way</a></h2>
+                <p>A Puerto-Rican ex-con just released from prison pledges to stay away from drugs and violence despite the pressure around him and lead on to a better life outside of NYC.</p>
               </div>
             </div>
           </div>
@@ -2463,8 +800,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Carne Treumla</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.cinemagia.ro/trailer/carne-tremula-6117/" class="text-black">Carne Treumla</a></h2>
+                <p>After leaving jail Víctor is still in love with Elena but she's married to the former cop -now basketball player- who became paralysed by a shot from Víctor's gun...FFFFFFFFFFIIIINNNNNNNSSSSSSSSSSHHHHHHHH</p>
               </div>
             </div>
           </div>
@@ -2478,8 +815,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Casino</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi1035796761/" class="text-black">Casino</a></h2>
+                <p>Greed deception money power and murder occur between two mobster best friends and a trophy wife over a gambling empire.</p>
               </div>
             </div>
           </div>
@@ -2493,8 +830,23 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Cast Away</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.youtube.com/watch?v=2TWYDogv4WQ" class="text-black">Cast Away</a></h2>
+                <p>A FedEx executive must transform himself physically and emotionally to survive a crash landing on a deserted island.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+		
+        <div class="item">
+          <div class="block-12">
+            <figure>
+              <img src="images/Drama/Catch_Me_If_You_Can.jpg" alt="Image" class="img-fluid">
+            </figure>
+            <div class="text">
+              <span class="meta">May 20th 2018</span>
+              <div class="text-inner">
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi1220346137/" class="text-black">Catch Me If You Can</a></h2>
+                <p>A true story about Frank Abagnale Jr. who before his 19th birthday successfully conned millions of dollars worth of checks as a Pan Am pilot doctor and legal prosecutor.</p>
               </div>
             </div>
           </div>
@@ -2508,8 +860,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Changing Lanes</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi1824325913/" class="text-black">Changing Lanes</a></h2>
+                <p>The story of what happens one day in New York when a young lawyer and a businessman share a small automobile accident on F.D.R. Drive and their mutual road rage escalates into a feud...FFFFFIIIIIIIIIINNNNNNNNSSSSSSSSHHHHHHH</p>
               </div>
             </div>
           </div>
@@ -2523,8 +875,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Cidade De Deus</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi3639516697/" class="text-black">Cidade De Deus</a></h2>
+                <p>Two boys growing up in a violent neighborhood of Rio de Janeiro take different paths: one becomes a photographer the other a drug dealer.</p>
               </div>
             </div>
           </div>
@@ -2538,8 +890,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">City By The Sea</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi2663252249/" class="text-black">City By The Sea</a></h2>
+                <p>Vincent Lamarca whose father was executed for a 1950s kidnapping of a child grew up to become a police officer only to see his own son become a murderer.</p>
               </div>
             </div>
           </div>
@@ -2559,13 +911,13 @@
 
 
 
-
+<!-- HORROR GENRE STARTS HERE -->
     <div class="site-section block-13 bg-primary fixed overlay-primary bg-image" style="background-image: url('images/hero_bg_3.jpg');"  data-stellar-background-ratio="0.5">
 
       <div class="container">
         <div class="row mb-5">
           <div class="col-md-12 text-center">
-            <h2 class="text-white">Horror</h2>
+            <h2 id = "H1" class="text-white">Horror</h2>
           </div>
         </div>
 		
@@ -2578,8 +930,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Prometheus</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi3300524313/" class="text-black">Book of Shadows: Blair Witch 2</a></h2>
+                <p>College students at a Boston college become fascinated by the events of the three missing filmmakers in Maryland so they decide to go into the same woods and find out what really happened.</p>
               </div>
             </div>
           </div>
@@ -2588,7 +940,7 @@
         </div>
       </div>      
     </div>
-<!-- SCI-FI GENRE ENDS HERE -->
+<!-- HORROR GENRE ENDS HERE -->
 
 </div>
 <span style="border:1px solid white;height=27px;width=17px"></span>
@@ -2598,7 +950,7 @@
 
 
 
-<div style="background-color:grey;color:white;padding:20px;">
+
 		  <!-- SCI-FI GENRE STARTS HERE -->
 
     <div class="site-section block-13 bg-primary fixed overlay-primary bg-image" style="background-image: url('images/hero_bg_3.jpg');"  data-stellar-background-ratio="0.5">
@@ -2606,7 +958,7 @@
       <div class="container">
         <div class="row mb-5">
           <div class="col-md-12 text-center">
-            <h2 class="text-white">Sci-Fi</h2>
+            <h2 id = "S1" class="text-white">Sci-Fi</h2>
           </div>
         </div>
 
@@ -2621,8 +973,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Alien</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/imdb/vi1497801241/" class="text-black">Alien</a></h2>
+                <p>A mining ship investigating a suspected SOS lands on a distant planet. The crew discovers some strange creatures and investigates.</p>
               </div>
             </div>
           </div>
@@ -2636,8 +988,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Alien 3</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi1520474905/" class="text-black">Alien 3</a></h2>
+                <p>Ripley continues to be stalked by a savage alien after her escape pod crashes on a prison planet.</p>
               </div>
             </div>
           </div>
@@ -2651,8 +1003,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Aliens</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi368744473/" class="text-black">Aliens</a></h2>
+                <p>The planet from Alien (1979) has been colonized but contact is lost. This time the rescue team has impressive firepower enough?</p>
               </div>
             </div>
           </div>
@@ -2666,8 +1018,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Bicentennial man</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.imdb.com/video/screenplay/vi783941913/" class="text-black">Bicentennial man</a></h2>
+                <p>An android endeavors to become human as he gradually acquires emotions.</p>
               </div>
             </div>
           </div>
@@ -2682,8 +1034,8 @@
             <div class="text">
               <span class="meta">May 20th 2018</span>
               <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#" class="text-black">Prometheus</a></h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad culpa, consectetur! Eligendi illo, repellat repudiandae cumque fugiat optio!</p>
+                <h2 class="heading mb-3"><a href="http://www.youtube.com/watch?v=sftuxbvGwiU" class="text-black">Prometheus</a></h2>
+                <p>A team of explorers discover a clue to the origins of mankind on Earth, leading them on a journey to the darkest corners of the universe. There, they must fight a terrifying battle to save the future of the human race. </p>
               </div>
             </div>
           </div>
@@ -2700,6 +1052,45 @@
 
 
 
+<!-- FAVORITES GENRE STARTS HERE -->
+    <div class="site-section block-13 bg-primary fixed overlay-primary bg-image" style="background-image: url('images/hero_bg_3.jpg');"  data-stellar-background-ratio="0.5">
+
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md-12 text-center">
+            <h2 id = "F1" class="text-white">Favorites</h2>
+          </div>
+        </div>
+		
+        <div class="item">
+          <!-- uses .block-12 -->
+          <div class="block-12">
+            <figure>
+              <img src="images/Horror/Blair_Witch2.jpg" alt="Image" class="img-fluid">
+            </figure>
+            <div class="text">
+              <span class="meta">May 20th 2018</span>
+              <div class="text-inner">
+                <h2 class="heading mb-3"><a href="#F1" class="text-black">Prometheus</a></h2>
+                <p>   Get from dataBase  </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        </div>
+      </div>      
+    </div>
+<!-- FAVORITES GENRE ENDS HERE -->
+
+</div>
+<span style="border:1px solid white;height=27px;width=17px"></span>
+</div>
+
+
+
+
+
 
 
     <footer class="site-footer border-top">
@@ -2707,71 +1098,71 @@
         <div class="row">
           <div class="col-lg-4">
             <div class="mb-5">
-              <h3 class="footer-heading mb-4">About Sportz</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe pariatur reprehenderit vero atque, consequatur id ratione, et non dignissimos culpa? Ut veritatis, quos illum totam quis blanditiis, minima minus odio!</p>
+              <h3 class="footer-heading mb-4">About Da Pirate Bae</h3>
+              <p>We are some boss ass CS students working on a boss ass Website for a Boss ass Professor!</p>
             </div>
 
             <div class="mb-5">
-              <h3 class="footer-heading mb-4">Recent Blog</h3>
+              <h3 class="footer-heading mb-4">Recentlly Added Movies</h3>
               <div class="block-25">
                 <ul class="list-unstyled">
                   <li class="mb-3">
                     <a href="#" class="d-flex">
                       <figure class="image mr-4">
-                        <img src="images/img_1.jpg" alt="" class="img-fluid">
+                        <img src="images/Sci-Fi/Alien_3.jpg" alt="" class="img-fluid">
                       </figure>
                       <div class="text">
-                        <h3 class="heading font-weight-light">Lorem ipsum dolor sit amet consectetur elit</h3>
+                        <h3 class="heading font-weight-light">Aliens 3</h3>
                       </div>
                     </a>
                   </li>
                   <li class="mb-3">
                     <a href="#" class="d-flex">
                       <figure class="image mr-4">
-                        <img src="images/img_1.jpg" alt="" class="img-fluid">
+                        <img src="images/Drama/American_History_X.jpg" alt="" class="img-fluid">
                       </figure>
                       <div class="text">
-                        <h3 class="heading font-weight-light">Lorem ipsum dolor sit amet consectetur elit</h3>
+                        <h3 class="heading font-weight-light">American History X</h3>
                       </div>
                     </a>
                   </li>
                   <li class="mb-3">
                     <a href="#" class="d-flex">
                       <figure class="image mr-4">
-                        <img src="images/img_1.jpg" alt="" class="img-fluid">
+                        <img src="images/Comedy/Arizona_Dream.jpg" alt="" class="img-fluid">
                       </figure>
                       <div class="text">
-                        <h3 class="heading font-weight-light">Lorem ipsum dolor sit amet consectetur elit</h3>
+                        <h3 class="heading font-weight-light">Arizona Dream</h3>
                       </div>
                     </a>
                   </li>
                 </ul>
               </div>
             </div>
-            
           </div>
+		  
+		  
           <div class="col-lg-4 mb-5 mb-lg-0">
             <div class="row mb-5">
               <div class="col-md-12">
                 <h3 class="footer-heading mb-4">Quick Menu</h3>
               </div>
+			  
               <div class="col-md-6 col-lg-6">
                 <ul class="list-unstyled">
-                  <li><a href="#">Home</a></li>
-                  <li><a href="#">Matches</a></li>
-                  <li><a href="#">News</a></li>
-                  <li><a href="#">Team</a></li>
+                  <li><a href="index.html">Home</a></li>
                 </ul>
               </div>
               <div class="col-md-6 col-lg-6">
                 <ul class="list-unstyled">
-                  <li><a href="#">About Us</a></li>
-                  <li><a href="#">Privacy Policy</a></li>
-                  <li><a href="#">Contact Us</a></li>
-                  <li><a href="#">Membership</a></li>
+                  <li><a href="about.html">About Us</a></li>
+                  <li><a href="contact.html">Contact Us</a></li>
+                  <li><a href="membership.html">Membership</a></li>
                 </ul>
               </div>
             </div>
+
+
 
             <div class="row">
               <div class="col-md-12">
@@ -2781,7 +1172,6 @@
                   <a href="#" class="pl-0 pr-3"><span class="icon-facebook"></span></a>
                   <a href="#" class="pl-3 pr-3"><span class="icon-twitter"></span></a>
                   <a href="#" class="pl-3 pr-3"><span class="icon-instagram"></span></a>
-                  <a href="#" class="pl-3 pr-3"><span class="icon-linkedin"></span></a>
                 </div>
               </div>
             </div>
@@ -2794,8 +1184,7 @@
 
               <div class="block-16">
                 <figure>
-                  <img src="images/img_1.jpg" alt="Image placeholder" class="img-fluid rounded">
-                  <a href="https://vimeo.com/channels/staffpicks/93951774" class="play-button popup-vimeo"><span class="icon-play"></span></a>
+                  <img src="images/Comedy/Arizona_Dream.jpg" alt="Image placeholder" class="img-fluid rounded"><a href="https://www.youtube.com/watch?v=5LlQNty_C8s" class="play-button popup-vimeo"><span class="icon-play"></span></a>
                 </figure>
               </div>
 
@@ -2803,7 +1192,7 @@
 
             <div class="mb-5">
               <h3 class="footer-heading mb-2">Subscribe Newsletter</h3>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit minima minus odio.</p>
+              <p>We are devoted to spreadiang the love by making all of our services free for those who subscribe to our news letter</p>
 
               <form action="#" method="post">
                 <div class="input-group mb-3">
@@ -2813,21 +1202,18 @@
                   </div>
                 </div>
               </form>
-
             </div>
-
           </div>
-          
         </div>
+		
         <div class="row pt-5 mt-5 text-center">
           <div class="col-md-12">
             <p>
             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy;<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
+            Copyright &copy;<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart-o" aria-hidden="true"></i> by <a target="_blank" >The Pirate Bae Co.</a>
             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
             </p>
           </div>
-          
         </div>
       </div>
     </footer>
@@ -2847,5 +1233,4 @@
   <script src="js/main.js"></script>
     
   </body>
->>>>>>> Stashed changes
 </html>
