@@ -154,8 +154,9 @@ public class PirateUtility extends HttpServlet {
     }
     
     public ArrayList<Movie> getFavorites(int memberID) {
-    	ArrayList<Movie> movieList = null;
-    	ArrayList<Integer> movieIDList = null;
+    	ArrayList<Movie> movieList = new ArrayList<Movie>();
+    	ArrayList<Integer> movieIDList = new ArrayList<Integer>();
+        
     	try {
 			Class.forName("com.mysql.jdbc.Driver");			
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost/moviestoredb", "root", "password");			

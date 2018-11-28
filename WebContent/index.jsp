@@ -3,17 +3,22 @@
 <%@page import = "piratePackage.*"%>
 <html lang="en">
   <head>
+      
     <%
         HttpSession sess = request.getSession();
         User currentUser = (User) sess.getAttribute("member");
         PirateUtility utility = new PirateUtility();
-        
-        //ArrayList<Movie> favourites = currentUser //getFavourites()
+        %>
+       <%
         ArrayList<Movie> actionMovies = utility.getGenre("Action");
         ArrayList<Movie> comedyMovies = utility.getGenre("Comedy");
         ArrayList<Movie> dramaMovies = utility.getGenre("Drama");
         ArrayList<Movie> horrorMovies = utility.getGenre("Horror");
         ArrayList<Movie> scifiMovies = utility.getGenre("Sci-Fi");
+        ArrayList<Movie> favourites = null;
+        if(currentUser != null){
+            favourites = utility.getFavorites(currentUser.getMemberID()); //getFavourites()
+        }
     %>
     
     <title>Da Pirate Bae &mdash; The Nations Leading Streaming Service</title>
@@ -96,7 +101,7 @@
             <li class="has-children">
               <a>Genre</a>
               <ul class="dropdown arrow-top">
-		<li><a href="#F1">Favorites</a></li>
+		<%if(currentUser != null){%><li><a href="#F1">Favorites</a></li><%}%>
                 <li><a href="#A1">Action</a></li>
                 <li><a href="#C1">Comedy</a></li>
                 <li><a href="#D1">Drama</a></li>
@@ -111,6 +116,7 @@
       </nav>
     </header>
     
+              <!--
     <div class="slide-one-item home-slider owl-carousel">
       <div class="site-blocks-cover overlay" style="background-image: url(images/Action/The_Avengers.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
         <div class="container">
@@ -138,7 +144,7 @@
         </div>
       </div>  
     </div>
-   		
+   		-->
 		
 		
 		<div>
@@ -165,7 +171,7 @@
                 <div class="text">
                   <span class="meta"><% out.print(currentMovie.getReleaseDate()); %> </span>
                   <div class="text-inner">
-                    <h2 class="heading mb-3"><a href = "<% out.print(currentMovie.getTrailer()); %>" class="text-black"></a><% out.print(currentMovie.getTitle()); %></h2>
+                    <h2 class="heading mb-3"><a href = <% out.print(currentMovie.getTrailer()); %> class="text-black"></a><% out.print(currentMovie.getTitle()); %></h2>
                     <p> <% out.print(currentMovie.getDescription()); %> </p>
                   </div>
                 </div>
@@ -338,34 +344,40 @@
 <span style="border:1px solid white;height=27px;width=17px"></span>
 
 <!-- FAVORITES GENRE STARTS HERE -->
+
+<%if(currentUser != null) {%>
     <div class="site-section block-13 bg-primary fixed overlay-primary bg-image" style="background-image: url('images/hero_bg_3.jpg');"  data-stellar-background-ratio="0.5">
 
       <div class="container">
         <div class="row mb-5">
           <div class="col-md-12 text-center">
-            <h2 id = "F1" class="text-white">Favorites</h2>
+            <h2 id = "A1" class="text-white">Action</h2>
           </div>
-        </div>
-		
-        <div class="item">
-          <!-- uses .block-12 -->
-          <div class="block-12">
-            <figure>
-              <img src="images/Horror/Blair_Witch2.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#F1" class="text-black">Prometheus</a></h2>
-                <p>   Get from dataBase  </p>
+        </div>          
+          
+        <div class="row">
+          <div class="nonloop-block-13 owl-carousel">
+          
+            <%for (int i = 0; i < favourites.size(); ++i){
+                Movie currentMovie = favourites.get(i);%>
+            <div class="item">
+              <div class="block-12">
+                <figure>
+                    <img src= "images/<%out.print(currentMovie.getGenre());%>/<%out.print(currentMovie.getImage()); %>" alt="Image" class="img-fluid">
+                </figure>
+                <div class="text">
+                  <span class="meta"><% out.print(currentMovie.getReleaseDate()); %> </span>
+                  <div class="text-inner">
+                    <h2 class="heading mb-3"><a href = <% out.print(currentMovie.getTrailer()); %> class="text-black"></a><% out.print(currentMovie.getTitle()); %></h2>
+                    <p> <% out.print(currentMovie.getDescription()); %> </p>
+                  </div>
+                </div>
               </div>
             </div>
+            <%}%>
           </div>
         </div>
-      </div>
-        </div>
-      </div>      
-    </div>
+          <%}%>
 <!-- FAVORITES GENRE ENDS HERE -->
 
 </div>
