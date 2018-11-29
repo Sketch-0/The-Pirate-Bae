@@ -5,11 +5,9 @@
   <head>
       
     <%
-        HttpSession sess = request.getSession();
+        HttpSession sess = request.getSession();        
         User currentUser = (User) sess.getAttribute("member");
         PirateUtility utility = new PirateUtility();
-        %>
-       <%
         ArrayList<Movie> actionMovies = utility.getGenre("Action");
         ArrayList<Movie> comedyMovies = utility.getGenre("Comedy");
         ArrayList<Movie> dramaMovies = utility.getGenre("Drama");
@@ -17,10 +15,10 @@
         ArrayList<Movie> scifiMovies = utility.getGenre("Sci-Fi");
         ArrayList<Movie> favourites = null;
         if(currentUser != null){
-            favourites = utility.getFavorites(currentUser.getMemberID()); //getFavourites()
+            favourites = utility.getFavorites(currentUser.getMemberID());
         }
     %>
-    
+
     <title>Da Pirate Bae &mdash; The Nations Leading Streaming Service</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -65,16 +63,17 @@
               <a href="#" class="text-secondary px-2"><span class="icon-instagram"></span></a>
               <a href="#" class="text-secondary px-2"><span class="icon-twitter"></span></a>
 
-           <div class="mb-5">
-             <form action="#" method="post">
-               <div class="input-group mb-3">
-                 <input type="text" placeholder="Search" aria-describedby="button-addon2">
-                 <div class="input-group-append">
-                   <button class="btn btn-primary" type="button" id="button-addon2">Send</button>
-                 </div>
-               </div>
-             </form>
-           </div>
+              <!-- search bar -->
+            <div class="mb-5">
+              <form action="#" method="post">
+                <div class="input-group mb-3">
+                  <input type="text" placeholder="Search" aria-describedby="button-addon2">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary" type="button" id="button-addon2">Send</button>
+                  </div>
+                </div>
+              </form>
+            </div>
 		   
             </div>
           </div>
@@ -101,7 +100,7 @@
             <li class="has-children">
               <a>Genre</a>
               <ul class="dropdown arrow-top">
-		<%if(currentUser != null){%><li><a href="#F1">Favorites</a></li><%}%>
+		<%if(favourites != null){%><li><a href="#F1">Favourites</a></li><%}%>
                 <li><a href="#A1">Action</a></li>
                 <li><a href="#C1">Comedy</a></li>
                 <li><a href="#D1">Drama</a></li>
@@ -116,7 +115,7 @@
       </nav>
     </header>
     
-              <!--
+              
     <div class="slide-one-item home-slider owl-carousel">
       <div class="site-blocks-cover overlay" style="background-image: url(images/Action/The_Avengers.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
         <div class="container">
@@ -144,11 +143,14 @@
         </div>
       </div>  
     </div>
-   		-->
+   		
 		
 		
 		<div>
 		  <!-- ACTION GENRE STARTS HERE -->
+                  
+<%//printMovies(actionMovies);%>
+
     <div class="site-section block-13 bg-primary fixed overlay-primary bg-image" style="background-image: url('images/hero_bg_3.jpg');"  data-stellar-background-ratio="0.5">
 
       <div class="container">
@@ -171,7 +173,7 @@
                 <div class="text">
                   <span class="meta"><% out.print(currentMovie.getReleaseDate()); %> </span>
                   <div class="text-inner">
-                    <h2 class="heading mb-3"><a href = <% out.print(currentMovie.getTrailer()); %> class="text-black"></a><% out.print(currentMovie.getTitle()); %></h2>
+                    <h2 class="heading mb-3"><a href = "<% out.print(currentMovie.getTrailer()); %>" class="text-black"><% out.print(currentMovie.getTitle()); %></a></h2>
                     <p> <% out.print(currentMovie.getDescription()); %> </p>
                   </div>
                 </div>
@@ -180,6 +182,7 @@
             <%}%>
           </div>
         </div>
+
 <!-- ACTION GENRE ENDS HERE -->
 
 </div>
@@ -208,7 +211,7 @@
                 <div class="text">
                   <span class="meta"><% out.print(currentMovie.getReleaseDate()); %> </span>
                   <div class="text-inner">
-                 <h2 class="heading mb-3"><a href = "<% out.print(currentMovie.getTrailer()); %>" class="text-black"></a><% out.print(currentMovie.getTitle()); %></h2>
+                 <h2 class="heading mb-3"><a href = "<% out.print(currentMovie.getTrailer()); %>" class="text-black"><% out.print(currentMovie.getTitle()); %></a></h2>
                  <p> <% out.print(currentMovie.getDescription()); %> </p>
                   </div>
                 </div>
@@ -247,7 +250,7 @@
                 <div class="text">
                   <span class="meta"><% out.print(currentMovie.getReleaseDate()); %> </span>
                   <div class="text-inner">
-                 <h2 class="heading mb-3"><a href = "<% out.print(currentMovie.getTrailer()); %>" class="text-black"></a><% out.print(currentMovie.getTitle()); %></h2>
+                 <h2 class="heading mb-3"><a href = "<% out.print(currentMovie.getTrailer()); %>" class="text-black"><% out.print(currentMovie.getTitle()); %></a></h2>
                  <p> <% out.print(currentMovie.getDescription()); %> </p>
                   </div>
                 </div>
@@ -284,7 +287,7 @@
                 <div class="text">
                   <span class="meta"><% out.print(currentMovie.getReleaseDate()); %> </span>
                   <div class="text-inner">
-                 <h2 class="heading mb-3"><a href = "<% out.print(currentMovie.getTrailer()); %>" class="text-black"></a><% out.print(currentMovie.getTitle()); %></h2>
+                 <h2 class="heading mb-3"><a href = "<% out.print(currentMovie.getTrailer()); %>" class="text-black"><% out.print(currentMovie.getTitle()); %></a></h2>
                  <p> <% out.print(currentMovie.getDescription()); %> </p>
                   </div>
                 </div>
@@ -328,7 +331,7 @@
                 <div class="text">
                   <span class="meta"><% out.print(currentMovie.getReleaseDate()); %> </span>
                   <div class="text-inner">
-                 <h2 class="heading mb-3"><a href = "<% out.print(currentMovie.getTrailer()); %>" class="text-black"></a><% out.print(currentMovie.getTitle()); %></h2>
+                 <h2 class="heading mb-3"><a href = "<% out.print(currentMovie.getTrailer()); %>" class="text-black"><% out.print(currentMovie.getTitle()); %></a></h2>
                  <p> <% out.print(currentMovie.getDescription()); %> </p>
                   </div>
                 </div>
@@ -345,13 +348,13 @@
 
 <!-- FAVORITES GENRE STARTS HERE -->
 
-<%if(currentUser != null) {%>
+<%if(favourites != null) {%>
     <div class="site-section block-13 bg-primary fixed overlay-primary bg-image" style="background-image: url('images/hero_bg_3.jpg');"  data-stellar-background-ratio="0.5">
 
       <div class="container">
         <div class="row mb-5">
           <div class="col-md-12 text-center">
-            <h2 id = "A1" class="text-white">Action</h2>
+            <h2 id = "A1" class="text-white">Favourites</h2>
           </div>
         </div>          
           
@@ -368,7 +371,7 @@
                 <div class="text">
                   <span class="meta"><% out.print(currentMovie.getReleaseDate()); %> </span>
                   <div class="text-inner">
-                    <h2 class="heading mb-3"><a href = <% out.print(currentMovie.getTrailer()); %> class="text-black"></a><% out.print(currentMovie.getTitle()); %></h2>
+                    <h2 class="heading mb-3"><a href = <% out.print(currentMovie.getTrailer()); %> class="text-black"><% out.print(currentMovie.getTitle()); %></a></h2>
                     <p> <% out.print(currentMovie.getDescription()); %> </p>
                   </div>
                 </div>
@@ -489,7 +492,7 @@
 
             <div class="mb-5">
               <h3 class="footer-heading mb-2">Subscribe Newsletter</h3>
-              <p>We are devoted to spreadiang the love by making all of our services free for those who subscribe to our news letter</p>
+              <p>We are devoted to spreading the love by making all of our services free for those who subscribe to our news letter</p>
 
               <form action="#" method="post">
                 <div class="input-group mb-3">
