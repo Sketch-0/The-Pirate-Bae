@@ -89,7 +89,7 @@ public class PirateUtility extends HttpServlet {
     	return -1;
     }
     
-    public Movie getMovie(String movieID) {
+    public Movie getMovie(int movieID) {
     	Movie movieBuffer = null;
     	try {
                 Class.forName("com.mysql.jdbc.Driver");			
@@ -164,7 +164,7 @@ public class PirateUtility extends HttpServlet {
         	Statement st = con.createStatement();
 
         	
-        	ResultSet favoriteIDs = st.executeQuery("select movieID from movie where memberID = '" + memberID + "';");
+        	ResultSet favoriteIDs = st.executeQuery("select movieID from favorite where memberID = '" + memberID + "';");
         	while(favoriteIDs.next())
         	{
         		movieIDList.add(favoriteIDs.getInt(1));
@@ -195,7 +195,7 @@ public class PirateUtility extends HttpServlet {
     	return null;
     }
     
-    public int getUserStarRating(String memberID, String movieID) {
+    public int getUserStarRating(int memberID, int movieID) {
     	try {
                 Class.forName("com.mysql.jdbc.Driver");			
                 Connection con = DriverManager.getConnection("jdbc:mysql://localhost/moviestoredb", "root", "password");			
@@ -212,7 +212,7 @@ public class PirateUtility extends HttpServlet {
         return -1;
     }
     
-    public float getMovieStarRating(String movieID) {
+    public float getMovieStarRating(int movieID) {
     	List<Integer> ratings = new ArrayList<Integer>();
     	int ratingTotal = 0;
     	try {
@@ -235,6 +235,53 @@ public class PirateUtility extends HttpServlet {
                 e.printStackTrace();
         }
         return -1;
+    }
+    
+    public int setMovieStarRating(int memberID, int movieID, int ratingScore) {
+    	try {
+            Class.forName("com.mysql.jdbc.Driver");			
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/moviestoredb", "root", "password");			
+
+        	Statement st = con.createStatement();
+        	
+        	ResultSet getRatingID = st.executeQuery("select ratingID from starrating where memberID = '" + memberID +"' AND movieID = '" + movieID + "';");
+        	getRatingID.next();
+
+        	ResultSet starValue = st.executeQuery("replace into starrating (ratingID, memberID, movieID, ratingScore) -> values ('" + getRatingID.getInt(1) + "', '" + memberID + "', '" + movieID +"', '" + ratingScore + "');");
+        	
+        	return 1;
+        }
+    catch (Exception e) {
+            e.printStackTrace();
+    }
+    return -1;
+    }
+    
+    public int toggleFavorites(int memberID, int movieID) {
+    	try {
+            Class.forName("com.mysql.jdbc.Driver");			
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/moviestoredb", "root", "password");			
+
+        	Statement st = con.createStatement();
+        	
+        	ResultSet favoriteID = st.executeQuery("select count(*) from favorite where memberID = '" + memberID + "' AND movieID = '" + movieID + "';");
+        	favoriteID.next();
+        	
+        	if(favoriteID.getInt(1) == 0) {
+        		ResultSet getTitle = st.executeQuery("select movieTitle from movie where movieID = '" + movieID + "';");
+        		getTitle.next();
+        		ResultSet starValue = st.executeQuery("replace into favorite (memberID, movieID, movieTitle) -> values ( '" + memberID + "', '" + movieID +"', '" + getTitle.getString(1) + "');");
+        		return 1;	//Indicates addition to Favorites
+        	}
+        	else {
+        		ResultSet starValue = st.executeQuery("delete from favorite where memberID = '" + memberID + "' AND movieID = '" + movieID + "';");
+        		return 0;	//Indicates removal from Favorites
+        	}
+        }
+    catch (Exception e) {
+            e.printStackTrace();
+    }
+    return -1;				//Indicates error
     }
     
     
