@@ -13,7 +13,9 @@
             String enteredUsername = request.getParameter("username");
             String enteredPass = request.getParameter("password");
             
-            int memberID = PirateUtility.validate(enteredUsername, enteredPass);
+            PirateUtility utility = new PirateUtility();
+            
+            int memberID = utility.validate(enteredUsername, enteredPass);
             
             if(memberID != -1){
                 login.setAttribute("member", new User(memberID));                

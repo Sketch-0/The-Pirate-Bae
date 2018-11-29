@@ -9,44 +9,89 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.*;
-import javax.servlet.jsp.JspWriter;
-import javax.swing.JTextPane;
 
 
-public class PirateUtility extends HttpServlet {
+public class PirateUtility extends HttpServlet {    
+    //the persistent connection object to use across the class
+    Connection connection;
     
-    public static int validate(String username, String password){
-        
+    //creates the connection 
+    public PirateUtility(){
+        this.connection = getConnection();
+    }
+    
+    //create a connection object by using the local mysql databse
+    public Connection getConnection(){
+        Connection connection = null;        
         try {
             Class.forName("com.mysql.jdbc.Driver");			
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/moviestoredb", "root", "password");			
-            
-            String loginQuery = "select memberPassword from member where userName = ?";            
-            PreparedStatement storedPass = con.prepareStatement(loginQuery);
-            
-            storedPass.setString(1, username);            
-            ResultSet returnedPass = storedPass.executeQuery();            
-            returnedPass.next();
-            
-            if(password.equals(returnedPass.getString(1))){
-                //get memberID out of database
-                String getMemberID = "select memberID from member where userName = ?";
-                PreparedStatement getID = con.prepareStatement(getMemberID);
-                
-                getID.setString(1, username);                
-                ResultSet returnedID = getID.executeQuery();
-                returnedID.next();
-                
-                return returnedID.getInt(1);
-            }
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/moviestoredb", "root", "password");			
 	}
         catch (Exception e) {
-                e.printStackTrace();
+            e.printStackTrace();
         }
+        return connection;
+    }
+    
+    //search using the 'like' clause in query
+    public ArrayList<Movie> searchMovies(String search) throws Exception{
+        ArrayList<Movie> returnedMovies = new ArrayList<Movie>();
+        
+        String searchQuery = "select * from movie where movieTitle like '%?%';";
+        PreparedStatement getSearch = this.connection.prepareStatement(searchQuery);
+        
+        //add the passed string to the query
+        getSearch.setString(1, search);
+        
+        ResultSet returnedSearch = getSearch.executeQuery();
+        
+        while(returnedSearch.next()){
+            returnedMovies.add(new Movie(
+                    returnedSearch.getInt(1),
+                    returnedSearch.getString(2),
+                    returnedSearch.getString(3),
+                    returnedSearch.getString(4),
+                    returnedSearch.getInt(5),
+                    returnedSearch.getString(6),
+                    returnedSearch.getString(7),
+                    returnedSearch.getDate(8),
+                    returnedSearch.getString(9),
+                    returnedSearch.getString(10),
+                    returnedSearch.getString(11),
+                    returnedSearch.getString(12)));
+        }        
+        return returnedMovies;
+    }
+    
+    //test the password against the database
+    public int validate(String username, String password) throws Exception{
+        
+        String loginQuery = "select memberPassword from member where userName = ?";
+        
+        PreparedStatement storedPass = this.connection.prepareStatement(loginQuery);
+
+        storedPass.setString(1, username);            
+        ResultSet returnedPass = storedPass.executeQuery();            
+        returnedPass.next();
+        
+        //if password is correct, retrieve the memberID
+        if(password.equals(returnedPass.getString(1))){
+            
+            String getMemberID = "select memberID from member where userName = ?";
+            PreparedStatement getID = this.connection.prepareStatement(getMemberID);
+
+            getID.setString(1, username);                
+            ResultSet returnedID = getID.executeQuery();
+            returnedID.next();
+
+            return returnedID.getInt(1);
+        }
+        //password was incorrect
         return -1;
     }
     
-    	public void insertInto(
+    //the insert query needs to be written
+    public void insertInto(
         String levelName,
         String userName,
         String firstName, 
@@ -74,19 +119,12 @@ public class PirateUtility extends HttpServlet {
         String expYear,
         String expMonth,
         String ccType
-        ) {
-		try {
-			Class.forName("com.mysql.jdbc.Driver");			
-			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/moviestoredb", "root", "password");
-                        PreparedStatement insert = connection.prepareStatement("");
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-    	
-    public int getFavorites() {    	
-    	return -1;
+        ) throws Exception {
+        
+        String insertQuery = "";
+        
+        PreparedStatement insert = this.connection.prepareStatement(insertQuery);
+            
     }
     
     public Movie getMovie(String movieID) {
@@ -115,17 +153,17 @@ public class PirateUtility extends HttpServlet {
         	}
             return movieBuffer;
         }
-        catch (Exception e) {
-                e.printStackTrace();
-        }
-    return null;
+            catch (Exception e) {
+                    e.printStackTrace();
+            }
+        return null;
     }
     
     public ArrayList<Movie> getGenre(String genre) {
     	ArrayList<Movie> movieList = new ArrayList<Movie>();
     	try {
-			Class.forName("com.mysql.jdbc.Driver");			
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost/moviestoredb", "root", "password");			
+                Class.forName("com.mysql.jdbc.Driver");			
+                Connection con = DriverManager.getConnection("jdbc:mysql://localhost/moviestoredb", "root", "password");			
 
         	Statement st = con.createStatement();
 
@@ -158,8 +196,8 @@ public class PirateUtility extends HttpServlet {
     	ArrayList<Integer> movieIDList = new ArrayList<Integer>();
         
     	try {
-			Class.forName("com.mysql.jdbc.Driver");			
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost/moviestoredb", "root", "password");			
+                Class.forName("com.mysql.jdbc.Driver");			
+                Connection con = DriverManager.getConnection("jdbc:mysql://localhost/moviestoredb", "root", "password");			
 
         	Statement st = con.createStatement();
 
@@ -207,7 +245,7 @@ public class PirateUtility extends HttpServlet {
                 return starValue.getInt(1);
             }
         catch (Exception e) {
-                e.printStackTrace();
+            e.printStackTrace();
         }
         return -1;
     }
@@ -237,7 +275,8 @@ public class PirateUtility extends HttpServlet {
         return -1;
     }
     
-    
+    /*
+    //broken; if you can get it working, go for it
     public static void printMovies(ArrayList<Movie> movies, String genre, HttpServletResponse response) throws Exception{
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
@@ -277,5 +316,5 @@ public class PirateUtility extends HttpServlet {
           out.print("</div>");
                   
     }
-    
+    */
 }
