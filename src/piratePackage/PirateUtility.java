@@ -121,10 +121,38 @@ public class PirateUtility extends HttpServlet {
         String ccType
         ) throws Exception {
         
-        String insertQuery = "";
-        
-        PreparedStatement insert = this.connection.prepareStatement(insertQuery);
-            
+        PreparedStatement signUp = this.connection.prepareStatement("insert into member("
+            		+ "userName, firstName, lastName, billAddressLine1,"
+            		+ "billAddressLine2, billCity, billState, billZipCode"
+            		+ "shipAddressLine1, shipAddressLine2, shipCity, shipState, shipZipCode,"
+            		+ "phoneNumber,emailAddress, memberPassword, memberSince, genrePreference,"
+            		+ "creditCardNumber, cardHolderFirstName, cardHolderLastName,"
+            		+ "expYear, expMonth, ccType) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            signUp.setString(1, userName.toString());
+            signUp.setString(2, firstName.toString());
+            signUp.setString(3, lastName.toString());
+            signUp.setString(4, billAddressLine1.toString());
+            signUp.setString(5, billAddressLine2.toString());
+            signUp.setString(6, billCity.toString());
+            signUp.setString(7, billState.toString());
+            signUp.setString(8, billZipCode.toString());
+            signUp.setString(9, shipAddressLine1.toString());
+            signUp.setString(10, shipAddressLine2.toString());
+            signUp.setString(11, shipCity.toString());
+            signUp.setString(12, shipState.toString());
+            signUp.setString(13, shipZipCode.toString());
+            signUp.setString(14, phoneNumber.toString());
+            signUp.setString(15, emailAddress.toString());
+            signUp.setString(16, memberPassword.toString());
+            signUp.setString(17, memberSince.toString());
+            signUp.setString(18, genrePreference.toString());
+            signUp.setString(19, creditCardNumber.toString());
+            signUp.setString(20, cardHolderFirstName.toString());
+            signUp.setString(21, cardHolderLastName.toString());
+            signUp.setString(22, expYear.toString());
+            signUp.setString(23, expMonth.toString());
+            signUp.setString(24, ccType.toString());
+            signUp.executeUpdate();            
     }
     
     public Movie getMovie(int movieID) {
@@ -296,31 +324,22 @@ public class PirateUtility extends HttpServlet {
     return -1;
     }
     
-    public int toggleFavorites(int memberID, int movieID) {
-    	try {
-            Class.forName("com.mysql.jdbc.Driver");			
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/moviestoredb", "root", "password");			
+    public boolean toggleFavorites(int memberID, int movieID) throws Exception {
+        Statement st = this.connection.createStatement();
 
-        	Statement st = con.createStatement();
-        	
-        	ResultSet favoriteID = st.executeQuery("select count(*) from favorite where memberID = '" + memberID + "' AND movieID = '" + movieID + "';");
-        	favoriteID.next();
-        	
-        	if(favoriteID.getInt(1) == 0) {
-        		ResultSet getTitle = st.executeQuery("select movieTitle from movie where movieID = '" + movieID + "';");
-        		getTitle.next();
-        		ResultSet starValue = st.executeQuery("replace into favorite (memberID, movieID, movieTitle) -> values ( '" + memberID + "', '" + movieID +"', '" + getTitle.getString(1) + "');");
-        		return 1;	//Indicates addition to Favorites
-        	}
-        	else {
-        		ResultSet starValue = st.executeQuery("delete from favorite where memberID = '" + memberID + "' AND movieID = '" + movieID + "';");
-        		return 0;	//Indicates removal from Favorites
-        	}
+        ResultSet favoriteID = st.executeQuery("select count(*) from favorite where memberID = '" + memberID + "' AND movieID = '" + movieID + "';");
+        favoriteID.next();
+
+        if(favoriteID.getInt(1) == 0) {
+                ResultSet getTitle = st.executeQuery("select movieTitle from movie where movieID = '" + movieID + "';");
+                getTitle.next();
+                ResultSet starValue = st.executeQuery("replace into favorite (memberID, movieID, movieTitle) -> values ( '" + memberID + "', '" + movieID +"', '" + getTitle.getString(1) + "');");
+                return true;	//Indicates addition to Favorites
         }
-    catch (Exception e) {
-            e.printStackTrace();
-    }
-    return -1;				//Indicates error
+        else {
+                ResultSet starValue = st.executeQuery("delete from favorite where memberID = '" + memberID + "' AND movieID = '" + movieID + "';");
+                return false;	//Indicates removal from Favorites
+        }
     }
     
     
