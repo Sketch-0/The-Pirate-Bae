@@ -278,6 +278,19 @@ public class PirateUtility extends HttpServlet {
         return -1;
     }
     
+    public boolean checkFavorite(int memberID, int movieID) throws Exception{
+        Statement st = this.connection.createStatement();
+        
+        ResultSet favoriteID = st.executeQuery("select count(*) from favorite where memberID = '" + memberID + "' AND movieID = '" + movieID + "';");
+        favoriteID.next();
+        if(favoriteID.getInt(1) == 0) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+    
     public float getMovieStarRating(int movieID) {
     	List<Integer> ratings = new ArrayList<Integer>();
     	int ratingTotal = 0;
@@ -327,18 +340,18 @@ public class PirateUtility extends HttpServlet {
     public boolean toggleFavorites(int memberID, int movieID) throws Exception {
         Statement st = this.connection.createStatement();
 
-        ResultSet favoriteID = st.executeQuery("select count(*) from favorite where memberID = '" + memberID + "' AND movieID = '" + movieID + "';");
-        favoriteID.next();
+        //ResultSet favoriteID = st.executeQuery("select count(*) from favorite where memberID = '" + memberID + "' AND movieID = '" + movieID + "';");
+        //favoriteID.next();
 
-        if(favoriteID.getInt(1) == 0) {
-                ResultSet getTitle = st.executeQuery("select movieTitle from movie where movieID = '" + movieID + "';");
-                getTitle.next();
-                ResultSet starValue = st.executeQuery("replace into favorite (memberID, movieID, movieTitle) -> values ( '" + memberID + "', '" + movieID +"', '" + getTitle.getString(1) + "');");
-                return true;	//Indicates addition to Favorites
+        if(!this.checkFavorite(memberID, movieID)) {
+            ResultSet getTitle = st.executeQuery("select movieTitle from movie where movieID = '" + movieID + "';");
+            getTitle.next();
+            ResultSet starValue = st.executeQuery("replace into favorite (memberID, movieID, movieTitle) -> values ( '" + memberID + "', '" + movieID +"', '" + getTitle.getString(1) + "');");
+            return true;	//Indicates addition to Favorites
         }
         else {
-                ResultSet starValue = st.executeQuery("delete from favorite where memberID = '" + memberID + "' AND movieID = '" + movieID + "';");
-                return false;	//Indicates removal from Favorites
+            ResultSet starValue = st.executeQuery("delete from favorite where memberID = '" + memberID + "' AND movieID = '" + movieID + "';");
+            return false;	//Indicates removal from Favorites
         }
     }
     

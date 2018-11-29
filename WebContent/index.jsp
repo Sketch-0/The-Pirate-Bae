@@ -149,7 +149,6 @@
 		<div>
 		  <!-- ACTION GENRE STARTS HERE -->
                   
-<%//printMovies(actionMovies);%>
 
     <div class="site-section block-13 bg-primary fixed overlay-primary bg-image" style="background-image: url('images/hero_bg_3.jpg');"  data-stellar-background-ratio="0.5">
 
@@ -173,7 +172,8 @@
                 <div class="text">
                   <span class="meta"><% out.print(currentMovie.getReleaseDate()); %> </span>
                   <div class="text-inner">
-                    <h2 class="heading mb-3"><a href = "<% out.print(currentMovie.getTrailer()); %>" class="text-black"><% out.print(currentMovie.getTitle()); %></a></h2>
+                    <h2 class="heading mb-3"><% out.print(currentMovie.getTitle()); %><a href = "<% out.print(currentMovie.getTrailer()); %>  " class="text-black"><% //out.print(currentMovie.getTitle()); %><span class="icon-play-circle-o"></span></a>
+                        <a href="#" class="text-secondary px-2"><span class="icon-heart"></span></a></h2>
                     <p> <% out.print(currentMovie.getDescription()); %> </p>
                   </div>
                 </div>
