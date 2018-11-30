@@ -12,7 +12,7 @@
 <h3><font color="white">Please fill out all fields below.</font></h3>
 
 <div class="container2">
-  <form action="/action_page.php">
+  <form action="memberAdd.jsp">
     <label for="firstName">First Name</label>
     <input type="text" id="firstName" name="firstName" placeholder="First Name">
 
@@ -88,11 +88,11 @@
 				<option value="discover">Discover</option>
 				</select>
             <label for="cardHolderFirstName">First Name on Card</label>
-            <input type="text" id="cardHoldFirstName" name="cardname" placeholder="Card Holder First Name">
+            <input type="text" id="cardHoldFirstName" name="cardHolderFirstName" placeholder="Card Holder First Name">
 			<label for="cardHolderLastName">Last Name on Card</label>
-            <input type="text" id="cardHoldLastName" name="cardname" placeholder="Card Holder Last Name">
+            <input type="text" id="cardHoldLastName" name="cardHolderLastName" placeholder="Card Holder Last Name">
             <label for="creditCardNumber">Credit card number</label>
-            <input type="text" id="creditCardNumber" name="cardnumber" placeholder="1111-2222-3333-4444">
+            <input type="text" id="creditCardNumber" name="creditCardNumber" placeholder="1111-2222-3333-4444">
             <label for="expmonth">Exp Month</label>
             <input type="text" id="expMonth" name="expMonth" placeholder="XX">
             <div class="row">
@@ -111,13 +111,14 @@
         <label>
           <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
         </label>
+              <input type="submit" value="Submit">
       </form>
     </div>
   </div>
 </div>
 
 
-    <input type="submit" value="Submit">
+
   </form>
 </div>
 

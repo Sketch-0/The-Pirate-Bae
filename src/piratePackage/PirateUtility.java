@@ -1,6 +1,6 @@
 package piratePackage;
 
-import java.io.PrintWriter;
+//import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -46,7 +46,8 @@ public class PirateUtility extends HttpServlet {
         ResultSet returnedSearch = getSearch.executeQuery();
         
         while(returnedSearch.next()){
-            returnedMovies.add(new Movie(
+            returnedMovies.add(
+                    new Movie(
                     returnedSearch.getInt(1),
                     returnedSearch.getString(2),
                     returnedSearch.getString(3),
@@ -71,22 +72,24 @@ public class PirateUtility extends HttpServlet {
         PreparedStatement storedPass = this.connection.prepareStatement(loginQuery);
 
         storedPass.setString(1, username);            
-        ResultSet returnedPass = storedPass.executeQuery();            
-        returnedPass.next();
+        ResultSet returnedPass = storedPass.executeQuery();  
         
-        //if password is correct, retrieve the memberID
-        if(password.equals(returnedPass.getString(1))){
-            
-            String getMemberID = "select memberID from member where userName = ?";
-            PreparedStatement getID = this.connection.prepareStatement(getMemberID);
+        //check if user is in database
+        if(returnedPass.next()){
+            //if password is correct, retrieve the memberID
+            if(password.equals(returnedPass.getString(1))){
 
-            getID.setString(1, username);                
-            ResultSet returnedID = getID.executeQuery();
-            returnedID.next();
+                String getMemberID = "select memberID from member where userName = ?";
+                PreparedStatement getID = this.connection.prepareStatement(getMemberID);
 
-            return returnedID.getInt(1);
+                getID.setString(1, username);                
+                ResultSet returnedID = getID.executeQuery();
+                returnedID.next();
+
+                return returnedID.getInt(1);
+            }
         }
-        //password was incorrect
+        //password was incorrect, or user not in database
         return -1;
     }
     
@@ -127,7 +130,7 @@ public class PirateUtility extends HttpServlet {
             		+ "shipAddressLine1, shipAddressLine2, shipCity, shipState, shipZipCode,"
             		+ "phoneNumber,emailAddress, memberPassword, memberSince, genrePreference,"
             		+ "creditCardNumber, cardHolderFirstName, cardHolderLastName,"
-            		+ "expYear, expMonth, ccType) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            		+ "expYear, expMonth, ccType) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             signUp.setString(1, userName.toString());
             signUp.setString(2, firstName.toString());
             signUp.setString(3, lastName.toString());
@@ -145,137 +148,112 @@ public class PirateUtility extends HttpServlet {
             signUp.setString(15, emailAddress.toString());
             signUp.setString(16, memberPassword.toString());
             signUp.setString(17, memberSince.toString());
-            signUp.setString(18, genrePreference.toString());
-            signUp.setString(19, creditCardNumber.toString());
-            signUp.setString(20, cardHolderFirstName.toString());
-            signUp.setString(21, cardHolderLastName.toString());
-            signUp.setString(22, expYear.toString());
-            signUp.setString(23, expMonth.toString());
-            signUp.setString(24, ccType.toString());
-            signUp.executeUpdate();            
+            signUp.setString(18, genrePreference);
+            signUp.setString(19, creditCardNumber);
+            signUp.setString(20, cardHolderFirstName);
+            signUp.setString(21, cardHolderLastName);
+            signUp.setString(22, expYear);
+            signUp.setString(23, expMonth);
+            signUp.setString(24, ccType);
+            
+            signUp.executeUpdate();
     }
     
-    public Movie getMovie(int movieID) {
+    public Movie getMovie(int movieID) throws Exception {
     	Movie movieBuffer = null;
-    	try {
-                Class.forName("com.mysql.jdbc.Driver");			
-                Connection con = DriverManager.getConnection("jdbc:mysql://localhost/moviestoredb", "root", "password");			
+        Statement st = this.connection.createStatement();
 
-        	Statement st = con.createStatement();
-
-        	ResultSet movieResult = st.executeQuery("select * from movie where movieID = '" + movieID + "';");
-        	while(movieResult.next())
-        	{
-        		movieBuffer = new Movie(movieResult.getInt(1),
-        					  movieResult.getString(2),
-        					  movieResult.getString(3),
-        					  movieResult.getString(4),
-        					  movieResult.getInt(5),
-        					  movieResult.getString(6),
-        					  movieResult.getString(7),
-        					  movieResult.getDate(8),
-        					  movieResult.getString(9),
-        					  movieResult.getString(10),
-        					  movieResult.getString(11),
-        					  movieResult.getString(12));
-        	}
-            return movieBuffer;
+        ResultSet movieResult = st.executeQuery("select * from movie where movieID = '" + movieID + "';");
+        while(movieResult.next())
+        {
+                movieBuffer = new Movie(
+                        movieResult.getInt(1),
+                        movieResult.getString(2),
+                        movieResult.getString(3),
+                        movieResult.getString(4),
+                        movieResult.getInt(5),
+                        movieResult.getString(6),
+                        movieResult.getString(7),
+                        movieResult.getDate(8),
+                        movieResult.getString(9),
+                        movieResult.getString(10),
+                        movieResult.getString(11),
+                        movieResult.getString(12));
         }
-            catch (Exception e) {
-                    e.printStackTrace();
-            }
-        return null;
+        
+        return movieBuffer;
     }
     
-    public ArrayList<Movie> getGenre(String genre) {
+    public ArrayList<Movie> getGenre(String genre) throws Exception {
+        
     	ArrayList<Movie> movieList = new ArrayList<Movie>();
-    	try {
-                Class.forName("com.mysql.jdbc.Driver");			
-                Connection con = DriverManager.getConnection("jdbc:mysql://localhost/moviestoredb", "root", "password");			
+        
+        Statement st = this.connection.createStatement();
 
-        	Statement st = con.createStatement();
-
-        	ResultSet movieResult = st.executeQuery("select * from movie where movieGenre = '" + genre + "';");
-        	while(movieResult.next())
-        	{
-        		movieList.add(new Movie(movieResult.getInt(1),
-        					  movieResult.getString(2),
-        					  movieResult.getString(3),
-        					  movieResult.getString(4),
-        					  movieResult.getInt(5),
-        					  movieResult.getString(6),
-        					  movieResult.getString(7),
-        					  movieResult.getDate(8),
-        					  movieResult.getString(9),
-        					  movieResult.getString(10),
-        					  movieResult.getString(11),
-        					  movieResult.getString(12)));
-        	}
-            return movieList;
-        }
-        catch (Exception e) {
-                e.printStackTrace();
-        }
-    return null;
+        ResultSet movieResult = st.executeQuery("select * from movie where movieGenre = '" + genre + "';");
+        
+        while(movieResult.next()) {
+                movieList.add(
+                        new Movie(movieResult.getInt(1),
+                        movieResult.getString(2),
+                        movieResult.getString(3),
+                        movieResult.getString(4),
+                        movieResult.getInt(5),
+                        movieResult.getString(6),
+                        movieResult.getString(7),
+                        movieResult.getDate(8),
+                        movieResult.getString(9),
+                        movieResult.getString(10),
+                        movieResult.getString(11),
+                        movieResult.getString(12)));
+        }        
+        return movieList;        
     }
     
-    public ArrayList<Movie> getFavorites(int memberID) {
+    public ArrayList<Movie> getFavorites(int memberID) throws Exception {
+        
     	ArrayList<Movie> movieList = new ArrayList<Movie>();
     	ArrayList<Integer> movieIDList = new ArrayList<Integer>();
         
-    	try {
-                Class.forName("com.mysql.jdbc.Driver");			
-                Connection con = DriverManager.getConnection("jdbc:mysql://localhost/moviestoredb", "root", "password");			
+        Statement st = this.connection.createStatement();
 
-        	Statement st = con.createStatement();
-
-        	
-        	ResultSet favoriteIDs = st.executeQuery("select movieID from favorite where memberID = '" + memberID + "';");
-        	while(favoriteIDs.next())
-        	{
-        		movieIDList.add(favoriteIDs.getInt(1));
-        	}
-        	for(int i = 0; i < movieIDList.size(); i++) {
-        		ResultSet movieResult = st.executeQuery("select * from movie where movieID = '" + movieIDList.get(i) + "';");
-	        	while(movieResult.next())
-	        	{
-	        		movieList.add(new Movie(movieResult.getInt(1),
-	        					  movieResult.getString(2),
-	        					  movieResult.getString(3),
-	        					  movieResult.getString(4),
-	        					  movieResult.getInt(5),
-	        					  movieResult.getString(6),
-	        					  movieResult.getString(7),
-	        					  movieResult.getDate(8),
-	        					  movieResult.getString(9),
-	        					  movieResult.getString(10),
-	        					  movieResult.getString(11),
-	        					  movieResult.getString(12)));
-	        	}
-        	}
-            return movieList;
+        ResultSet favoriteIDs = st.executeQuery("select movieID from favorite where memberID = '" + memberID + "';");
+        while(favoriteIDs.next())
+        {
+                movieIDList.add(favoriteIDs.getInt(1));
         }
-    	catch (Exception e) {
-            e.printStackTrace();
-    	}
-    	return null;
+        for(int i = 0; i < movieIDList.size(); i++) {
+                ResultSet movieResult = st.executeQuery("select * from movie where movieID = '" + movieIDList.get(i) + "';");
+                while(movieResult.next())
+                {
+                        movieList.add(
+                                new Movie(movieResult.getInt(1),
+                                movieResult.getString(2),
+                                movieResult.getString(3),
+                                movieResult.getString(4),
+                                movieResult.getInt(5),
+                                movieResult.getString(6),
+                                movieResult.getString(7),
+                                movieResult.getDate(8),
+                                movieResult.getString(9),
+                                movieResult.getString(10),
+                                movieResult.getString(11),
+                                movieResult.getString(12)));
+                }
+        }
+        
+        return movieList;       
     }
     
-    public int getUserStarRating(int memberID, int movieID) {
-    	try {
-                Class.forName("com.mysql.jdbc.Driver");			
-                Connection con = DriverManager.getConnection("jdbc:mysql://localhost/moviestoredb", "root", "password");			
+    public int getUserStarRating(int memberID, int movieID) throws Exception {
+        
+        Statement st = this.connection.createStatement();
 
-            	Statement st = con.createStatement();
-
-            	ResultSet starValue = st.executeQuery("select ratingScore from starrating where movieID = '" + movieID + "' and memberID = '" + memberID + "';");
-            	starValue.next();
-                return starValue.getInt(1);
-            }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        return -1;
+        ResultSet starValue = st.executeQuery("select ratingScore from starrating where movieID = '" + movieID + "' and memberID = '" + memberID + "';");
+        starValue.next();
+        
+        return starValue.getInt(1);
+        
     }
     
     public boolean checkFavorite(int memberID, int movieID) throws Exception{
@@ -291,50 +269,35 @@ public class PirateUtility extends HttpServlet {
         }
     }
     
-    public float getMovieStarRating(int movieID) {
+    public float getMovieStarRating(int movieID) throws Exception {
+        
     	List<Integer> ratings = new ArrayList<Integer>();
-    	int ratingTotal = 0;
-    	try {
-                Class.forName("com.mysql.jdbc.Driver");			
-                Connection con = DriverManager.getConnection("jdbc:mysql://localhost/moviestoredb", "root", "password");			
+        int ratingTotal = 0;
+                
+        Statement st = this.connection.createStatement();
 
-            	Statement st = con.createStatement();
-
-            	ResultSet starValue = st.executeQuery("select ratingScore from starrating where movieID = '" + movieID + "';");
-            	while(starValue.next())
-            	{
-            		ratings.add(starValue.getInt(1));
-            	}
-            	for(int i = 0; i < ratings.size(); i++) {
-            		ratingTotal += ratings.get(i);
-            	}
-                return ratingTotal / ratings.size();
-            }
-        catch (Exception e) {
-                e.printStackTrace();
+        ResultSet starValue = st.executeQuery("select ratingScore from starrating where movieID = '" + movieID + "';");
+        
+        while(starValue.next()) {
+            ratings.add(starValue.getInt(1));
         }
-        return -1;
+        for(int i = 0; i < ratings.size(); i++) {
+            ratingTotal += ratings.get(i);
+        }
+        return ratingTotal / ratings.size();
+            
     }
     
 
-    public int setMovieStarRating(int memberID, int movieID, int ratingScore) {
-    	try {
-            Class.forName("com.mysql.jdbc.Driver");			
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/moviestoredb", "root", "password");			
+    public int setMovieStarRating(int memberID, int movieID, int ratingScore) throws Exception {
+        Statement st = this.connection.createStatement();
 
-        	Statement st = con.createStatement();
-        	
-        	ResultSet getRatingID = st.executeQuery("select ratingID from starrating where memberID = '" + memberID +"' AND movieID = '" + movieID + "';");
-        	getRatingID.next();
+        ResultSet getRatingID = st.executeQuery("select ratingID from starrating where memberID = '" + memberID +"' AND movieID = '" + movieID + "';");
+        getRatingID.next();
 
-        	ResultSet starValue = st.executeQuery("replace into starrating (ratingID, memberID, movieID, ratingScore) -> values ('" + getRatingID.getInt(1) + "', '" + memberID + "', '" + movieID +"', '" + ratingScore + "');");
-        	
-        	return 1;
-        }
-    catch (Exception e) {
-            e.printStackTrace();
-    }
-    return -1;
+        ResultSet starValue = st.executeQuery("replace into starrating (ratingID, memberID, movieID, ratingScore) -> values ('" + getRatingID.getInt(1) + "', '" + memberID + "', '" + movieID +"', '" + ratingScore + "');");
+
+        return 1;
     }
     
     public boolean toggleFavorites(int memberID, int movieID) throws Exception {
@@ -355,6 +318,22 @@ public class PirateUtility extends HttpServlet {
         }
     }
     
+    //check if the username is in the database
+    public boolean checkUserName(String userName) throws Exception {        
+        String exist = "select * from member where username = ?";
+        
+        PreparedStatement exists = this.connection.prepareStatement(exist);
+        exists.setString(1, userName);
+        ResultSet userCheck = exists.executeQuery();
+        
+        //test if the result set has sometihng in it
+        if (userCheck.next()){
+            //user is in the database
+            return true;
+        }
+        //user is not in the database
+        return false;
+    }
     
 
     /*
