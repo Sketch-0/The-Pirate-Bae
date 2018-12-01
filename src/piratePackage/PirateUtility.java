@@ -130,7 +130,8 @@ public class PirateUtility extends HttpServlet {
             		+ "shipAddressLine1, shipAddressLine2, shipCity, shipState, shipZipCode,"
             		+ "phoneNumber,emailAddress, memberPassword, memberSince, genrePreference,"
             		+ "creditCardNumber, cardHolderFirstName, cardHolderLastName,"
-            		+ "expYear, expMonth, ccType) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            		+ "expYear, expMonth, ccType) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+            		Statement.RETURN_GENERATED_KEYS);
             signUp.setString(1, userName.toString());
             signUp.setString(2, firstName.toString());
             signUp.setString(3, lastName.toString());
@@ -157,6 +158,7 @@ public class PirateUtility extends HttpServlet {
             signUp.setString(24, ccType);
             
             signUp.executeUpdate();
+            signUp.getGeneratedKeys();
     }
     
     public Movie getMovie(int movieID) throws Exception {
