@@ -128,37 +128,38 @@ public class PirateUtility extends HttpServlet {
             		+ "userName, firstName, lastName, billAddressLine1,"
             		+ "billAddressLine2, billCity, billState, billZipCode"
             		+ "shipAddressLine1, shipAddressLine2, shipCity, shipState, shipZipCode,"
-            		+ "phoneNumber,emailAddress, memberPassword, memberSince, genrePreference,"
+            		+ "phoneNumber,emailAddress, memberPassword, memberSince, genrePreference, creditCardCCV,"
             		+ "creditCardNumber, cardHolderFirstName, cardHolderLastName,"
-            		+ "expYear, expMonth, ccType) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-            		Statement.RETURN_GENERATED_KEYS);
-            signUp.setString(1, userName.toString());
-            signUp.setString(2, firstName.toString());
-            signUp.setString(3, lastName.toString());
-            signUp.setString(4, billAddressLine1.toString());
-            signUp.setString(5, billAddressLine2.toString());
-            signUp.setString(6, billCity.toString());
-            signUp.setString(7, billState.toString());
-            signUp.setString(8, billZipCode.toString());
-            signUp.setString(9, shipAddressLine1.toString());
-            signUp.setString(10, shipAddressLine2.toString());
-            signUp.setString(11, shipCity.toString());
-            signUp.setString(12, shipState.toString());
-            signUp.setString(13, shipZipCode.toString());
-            signUp.setString(14, phoneNumber.toString());
-            signUp.setString(15, emailAddress.toString());
-            signUp.setString(16, memberPassword.toString());
-            signUp.setString(17, memberSince.toString());
-            signUp.setString(18, genrePreference);
-            signUp.setString(19, creditCardNumber);
-            signUp.setString(20, cardHolderFirstName);
-            signUp.setString(21, cardHolderLastName);
-            signUp.setString(22, expYear);
-            signUp.setString(23, expMonth);
-            signUp.setString(24, ccType);
-            
-            signUp.executeUpdate();
+            		+ "expYear, expMonth, ccType) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",  Statement.RETURN_GENERATED_KEYS);
+            signUp.setString(2, levelName.toString());
+            signUp.setString(3, userName.toString());
+            signUp.setString(4, firstName.toString());
+            signUp.setString(5, lastName.toString());
+            signUp.setString(6, billAddressLine1.toString());
+            signUp.setString(7, billAddressLine2.toString());
+            signUp.setString(8, billCity.toString());
+            signUp.setString(9, billState.toString());
+            signUp.setString(10, billZipCode.toString());
+            signUp.setString(11, shipAddressLine1.toString());
+            signUp.setString(12, shipAddressLine2.toString());
+            signUp.setString(13, shipCity.toString());
+            signUp.setString(13, shipState.toString());
+            signUp.setString(14, shipZipCode.toString());
+            signUp.setString(15, phoneNumber.toString());
+            signUp.setString(16, emailAddress.toString());
+            signUp.setString(17, memberPassword.toString());
+            signUp.setString(18, memberSince.toString());
+            signUp.setString(20, genrePreference.toString());
+            signUp.setString(21, creditCardCCV.toString());
+            signUp.setString(22, creditCardNumber.toString());
+            signUp.setString(23, cardHolderFirstName.toString());
+            signUp.setString(24, cardHolderLastName.toString());
+            signUp.setString(25, expYear.toString());
+            signUp.setString(26, expMonth.toString());
+            signUp.setString(27, ccType.toString());
             signUp.getGeneratedKeys();
+            signUp.executeUpdate();
+
     }
     
     public Movie getMovie(int movieID) throws Exception {
