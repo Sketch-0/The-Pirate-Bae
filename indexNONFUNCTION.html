@@ -60,7 +60,7 @@
           </div>
         </div>
       </div>
-      <nav class="site-navigation position-relative text-left bg-black text-md-left" role="navigation">
+      <nav class="site-navigation position-relative text-right bg-black text-md-right" role="navigation">
         <div class="container position-relative">
           <div class="site-logo">
             <a href="contact.html"><img src="images/logo.png" alt=""></a>
@@ -154,13 +154,19 @@
 		              <div class="text-inner">
 		                <h2 class="heading mb-3"><a id="assassins" href="" class="text-black">Assassins</a>
 							<a href="http://www.imdb.com/video/screenplay/vi4038525209/" class="text-secondary px-2"><span class="icon-play-circle-o"></span></a>
-							<a href="#" class="text-secondary px-2"><span class="icon-heart"></span></a></h2>
+							<a href="" class="text-secondary px-2"><span onclick="checkFavorites(this)" class="fa icon-heart-o"></span></a></h2>
 		                <p>Robert Rath (Sylvester Stallone) is a seasoned hitman who just wants out of the business with no back talk… FFFIIIIIINNNNNNNNSSSSSSHHHHHHHHHH</p>
 		              </div>
 		            </div>
 		          </div>
 		        </div>
-
+				
+				<script>
+				function checkFavorites(x){
+					x.classList.toggle("fa-icon-heart");
+					}
+				</script>
+				
 		        <div class="item">
 		          <div class="block-12">
 		            <figure>
@@ -1269,9 +1275,7 @@
 	                  </div>
 	                </div>
 	              </form>
-
 	            </div>
-
 	          </div>
           
 	        </div>

@@ -269,9 +269,9 @@ a:hover {
 
 .site-navbar .site-logo {
   position: absolute;
-  right: 0;
+  left: 0;
   top: 0;
-  margin-top: -180px;
+  margin-top: -20px;
 }
 
 .site-navbar .site-navigation {
@@ -1178,4 +1178,12 @@ a:hover {
   background: #f23a2e;
   color: #fff;
   border: 1px solid transparent;
+}
+.fa {
+	color: red;
+	cursor: pointer;
+	user-select: none;
+}
+.fa:hover {
+	color: darkred;
 }
