@@ -3,11 +3,11 @@
 <%@page import = "piratePackage.*"%>
 <html lang="en">
   <head>
-      <%
-        HttpSession sess = request.getSession();
-        User currentUser = (User) sess.getAttribute("member");
-        PirateUtility utility = new PirateUtility();
-        ArrayList<Movie> searchResults = utility.searchMovies(request.getParameter("searchValue"));
+    <%
+      HttpSession sess = request.getSession();
+      User currentUser = (User) sess.getAttribute("member");
+      PirateUtility utility = new PirateUtility();
+      ArrayList<Movie> searchResults = utility.searchMovies(request.getParameter("searchValue"));
     %>
     <title>Da Pirate Bae &mdash; The Nations Leading Streaming Service</title>
     <meta charset="utf-8">
@@ -100,40 +100,40 @@
     </header>
 
 
-<div>
-    
+<div>    
     <div class="site-section block-13 bg-primary fixed overlay-primary bg-image" style="background-image: url('images/hero_bg_3.jpg');"  data-stellar-background-ratio="0.5">
 
-      <div class="container">          
-        <div class="row mb-5">
-          <div class="col-md-12 text-center">
-            <h2 id = "A1" class="text-white">Movies found with: <%out.print(request.getParameter("searchValue"));%></h2>
+        <div class="container">          
+            <div class="row mb-5">
+              <div class="col-md-12 text-center">
+                <h2 id = "A1" class="text-white">Movies found with: <%out.print(request.getParameter("searchValue"));%></h2>
 <!--BROKEN-->
-            <%for (int i = 0; i < searchResults.size(); ++i){
-                Movie currentMovie = searchResults.get(i);%>
-            <div class="item">
-              <div class="block-12">
-                <figure>
-                    <img src= "images/Action/<%out.print(currentMovie.getImage()); %>" alt="Image" class="img-fluid">
-                </figure>
-                <div class="text">
-                  <span class="meta"><% out.print(currentMovie.getReleaseDate()); %> </span>
-                  <div class="text-inner">
-                    <h2 class="heading mb-3"><% out.print(currentMovie.getTitle()); %><a href = "<% out.print(currentMovie.getTrailer()); %>  " class="text-black"><% //out.print(currentMovie.getTitle()); %><span class="icon-play-circle-o"></span></a>
-                        <a href="#" class="text-secondary px-2"><span class="icon-heart"></span></a></h2>
-                    <p> <% out.print(currentMovie.getDescription()); %> </p>
-                  </div>
-                </div>
+                <%for (int i = 0; i < searchResults.size(); ++i){
+                    Movie currentMovie = searchResults.get(i);%>
+                    <div class="item">
+                      <div class="block-12">
+                        <figure>
+                            <img src= "images/<%out.print(currentMovie.getGenre());%>/<%out.print(currentMovie.getImage()); %>" alt="Image" class="img-fluid">
+                        </figure>
+                        <div class="text">
+                          <span class="meta"><% out.print(currentMovie.getReleaseDate()); %> </span>
+                          <div class="text-inner">
+                            <h2 class="heading mb-3"><% out.print(currentMovie.getTitle()); %><a href = "<% out.print(currentMovie.getTrailer()); %>  " class="text-black"><% //out.print(currentMovie.getTitle()); %><span class="icon-play-circle-o"></span></a>
+                                <a href="#" class="text-secondary px-2"><span class="icon-heart"></span></a></h2>
+                            <p> <% out.print(currentMovie.getDescription()); %> </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                <%}%>
+
               </div>
             </div>
-            <%}%>
-            
-          </div>
+            <img src="image.jpg" alt="Trulli" width="500" height="333">
         </div>
-	<img src="image.jpg" alt="Trulli" width="500" height="333">
+    </div>
 </div>
-</div>
-</div>
+                
 <span style="border:1px solid white;height=27px;width=17px"></span>
 
 
