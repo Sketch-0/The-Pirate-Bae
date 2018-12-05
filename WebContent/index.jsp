@@ -65,11 +65,14 @@
 
               <!-- search bar -->
             <div class="mb-5">
-              <form action="#" method="post">
+              <form method="post" action = "searchPage.jsp">
                 <div class="input-group mb-3">
-                  <input type="text" placeholder="Search" aria-describedby="button-addon2">
+                  <input type="text" placeholder="Search" aria-describedby="button-addon2" name = "searchValue">
                   <div class="input-group-append">
+                      <!--
                     <button class="btn btn-primary" type="button" id="button-addon2">Send</button>
+                      -->
+                      <input type ="submit" value = "Search">
                   </div>
                 </div>
               </form>

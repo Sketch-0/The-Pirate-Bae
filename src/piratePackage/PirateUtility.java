@@ -37,11 +37,11 @@ public class PirateUtility extends HttpServlet {
     public ArrayList<Movie> searchMovies(String search) throws Exception{
         ArrayList<Movie> returnedMovies = new ArrayList<Movie>();
         
-        String searchQuery = "select * from movie where movieTitle like '%?%';";
+        String searchQuery = "select * from movie where movieTitle like ?;";
         PreparedStatement getSearch = this.connection.prepareStatement(searchQuery);
         
         //add the passed string to the query
-        getSearch.setString(1, search);
+        getSearch.setString(1, "%" + search + "%");
         
         ResultSet returnedSearch = getSearch.executeQuery();
         
@@ -93,7 +93,6 @@ public class PirateUtility extends HttpServlet {
         return -1;
     }
     
-    //the insert query needs to be written
     public void insertInto(
         String levelName,
         String userName,
@@ -130,7 +129,7 @@ public class PirateUtility extends HttpServlet {
             		+ "shipAddressLine1, shipAddressLine2, shipCity, shipState, shipZipCode,"
             		+ "phoneNumber,emailAddress, memberPassword, memberSince, genrePreference, creditCardCCV,"
             		+ "creditCardNumber, cardHolderFirstName, cardHolderLastName,"
-            		+ "expYear, expMonth, ccType) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",  Statement.RETURN_GENERATED_KEYS);
+            		+ "expYear, expMonth, ccType) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",  Statement.RETURN_GENERATED_KEYS);
             signUp.setString(2, levelName.toString());
             signUp.setString(3, userName.toString());
             signUp.setString(4, firstName.toString());
@@ -143,20 +142,20 @@ public class PirateUtility extends HttpServlet {
             signUp.setString(11, shipAddressLine1.toString());
             signUp.setString(12, shipAddressLine2.toString());
             signUp.setString(13, shipCity.toString());
-            signUp.setString(13, shipState.toString());
-            signUp.setString(14, shipZipCode.toString());
-            signUp.setString(15, phoneNumber.toString());
-            signUp.setString(16, emailAddress.toString());
-            signUp.setString(17, memberPassword.toString());
-            signUp.setString(18, memberSince.toString());
+            signUp.setString(14, shipState.toString());
+            signUp.setString(15, shipZipCode.toString());
+            signUp.setString(16, phoneNumber.toString());
+            signUp.setString(17, emailAddress.toString());
+            signUp.setString(18, memberPassword.toString());
+            signUp.setString(19, memberSince.toString());
             signUp.setString(20, genrePreference.toString());
-            signUp.setString(21, creditCardCCV.toString());
-            signUp.setString(22, creditCardNumber.toString());
-            signUp.setString(23, cardHolderFirstName.toString());
-            signUp.setString(24, cardHolderLastName.toString());
-            signUp.setString(25, expYear.toString());
-            signUp.setString(26, expMonth.toString());
-            signUp.setString(27, ccType.toString());
+            signUp.setString(22, creditCardCCV.toString());
+            signUp.setString(23, creditCardNumber.toString());
+            signUp.setString(24, cardHolderFirstName.toString());
+            signUp.setString(25, cardHolderLastName.toString());
+            signUp.setString(26, expYear.toString());
+            signUp.setString(27, expMonth.toString());
+            signUp.setString(28, ccType.toString());
             signUp.getGeneratedKeys();
             signUp.executeUpdate();
 
