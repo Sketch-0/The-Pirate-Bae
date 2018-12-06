@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.*;
 
-
 public class PirateUtility extends HttpServlet {    
     //the persistent connection object to use across the class
     Connection connection;
@@ -113,25 +112,27 @@ public class PirateUtility extends HttpServlet {
         String emailAddress, 
         String memberPassword,
         String memberSince,
-        String activeStatus,
+        int activeStatus,
         String genrePreference,
-        String creditCardCCV,
+        int creditCardCCV,
         String creditCardNumber,
         String cardHolderFirstName,
         String cardHolderLastName,
-        String expYear,
-        String expMonth,
+        int expYear,
+        int expMonth,
         String ccType
+       
         ) throws Exception {
-        
+    	
         PreparedStatement signUp = this.connection.prepareStatement("insert into member("
-            		+ "userName, firstName, lastName, billAddressLine1,"
+            		+ "memberID, levelName, userName, firstName, lastName, billAddressLine1,"
             		+ "billAddressLine2, billCity, billState, billZipCode"
             		+ "shipAddressLine1, shipAddressLine2, shipCity, shipState, shipZipCode,"
-            		+ "phoneNumber,emailAddress, memberPassword, memberSince, genrePreference, creditCardCCV,"
+            		+ "phoneNumber, emailAddress, memberPassword, genrePreference, creditCardCCV,"
             		+ "creditCardNumber, cardHolderFirstName, cardHolderLastName,"
-            		+ "expYear, expMonth, ccType) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",  Statement.RETURN_GENERATED_KEYS);
-            signUp.setString(2, levelName.toString());
+            		+ "expYear, expMonth, ccType) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            
+        	signUp.setString(2, levelName.toString());
             signUp.setString(3, userName.toString());
             signUp.setString(4, firstName.toString());
             signUp.setString(5, lastName.toString());
@@ -148,18 +149,30 @@ public class PirateUtility extends HttpServlet {
             signUp.setString(15, phoneNumber.toString());
             signUp.setString(16, emailAddress.toString());
             signUp.setString(17, memberPassword.toString());
+           /* LocalDateTime now = LocalDateTime.now();
+            Timestamp timenow = Timestamp.valueOf(now);
+            Calendar date = new GregorianCalendar(2018,0,31);*/
+            //signUp.setTimestamp(memberSince, timenow, date);
             signUp.setString(18, memberSince.toString());
+            signUp.setInt(19, activeStatus);
             signUp.setString(20, genrePreference.toString());
-            signUp.setString(21, creditCardCCV.toString());
+            signUp.setInt(21, creditCardCCV);
             signUp.setString(22, creditCardNumber.toString());
             signUp.setString(23, cardHolderFirstName.toString());
             signUp.setString(24, cardHolderLastName.toString());
-            signUp.setString(25, expYear.toString());
-            signUp.setString(26, expMonth.toString());
+            signUp.setInt(25, expYear);
+            signUp.setInt(26, expMonth);
             signUp.setString(27, ccType.toString());
             signUp.getGeneratedKeys();
             signUp.executeUpdate();
-
+            
+            ResultSet rs = signUp.getGeneratedKeys();     
+            while (rs.next()) {
+            	java.math.BigDecimal idColVar = rs.getBigDecimal(1);     
+            	System.out.println("automatically generated key value = " + idColVar);
+            	}
+            rs.close();                           
+            signUp.close();
     }
     
     public Movie getMovie(int movieID) throws Exception {
