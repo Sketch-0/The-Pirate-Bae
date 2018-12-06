@@ -3,11 +3,11 @@
 <%@page import = "piratePackage.*"%>
 <html lang="en">
   <head>
-      
     <%
-        HttpSession sess = request.getSession();        
+        HttpSession sess = request.getSession();
         User currentUser = (User) sess.getAttribute("member");
         PirateUtility utility = new PirateUtility();
+        
         ArrayList<Movie> actionMovies = utility.getGenre("Action");
         ArrayList<Movie> comedyMovies = utility.getGenre("Comedy");
         ArrayList<Movie> dramaMovies = utility.getGenre("Drama");
@@ -18,7 +18,7 @@
             favourites = utility.getFavorites(currentUser.getMemberID());
         }
     %>
-
+    
     <title>Da Pirate Bae &mdash; The Nations Leading Streaming Service</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -45,7 +45,7 @@
     <div class="site-mobile-menu">
       <div class="site-mobile-menu-header">
         <div class="site-mobile-menu-logo">
-          <a href="#"><img src="images/logo.png" alt="Image"></a>
+          <a href="contact.html"><img src="images/logo.png" alt="Image"></a>
         </div>
         <div class="site-mobile-menu-close mt-3">
           <span class="icon-close2 js-menu-toggle"></span>
@@ -63,26 +63,22 @@
               <a href="#" class="text-secondary px-2"><span class="icon-instagram"></span></a>
               <a href="#" class="text-secondary px-2"><span class="icon-twitter"></span></a>
 
-              <!-- search bar -->
-            <div class="mb-5">
-              <form method="post" action = "searchPage.jsp">
+           <div class="mb-5">
+             <form method="post" action = "searchPage.jsp">
                 <div class="input-group mb-3">
                   <input type="text" placeholder="Search" aria-describedby="button-addon2" name = "searchValue">
                   <div class="input-group-append">
-                      <!--
-                    <button class="btn btn-primary" type="button" id="button-addon2">Send</button>
-                      -->
                       <input type ="submit" value = "Search">
                   </div>
                 </div>
               </form>
-            </div>
+           </div>
 		   
             </div>
           </div>
         </div>
       </div>
-      <nav class="site-navigation position-relative text-right bg-black text-md-right" role="navigation">
+      <nav class="site-navigation position-relative text-left bg-black text-md-left" role="navigation">
 		  
         <div class="container position-relative">
           <div class="site-logo">
@@ -103,12 +99,12 @@
             <li class="has-children">
               <a>Genre</a>
               <ul class="dropdown arrow-top">
-		<%if(favourites != null){%><li><a href="#F1">Favourites</a></li><%}%>
+		<%if(favourites != null && favourites.size() > 0){%><li><a href="#F1">Favourites</a></li><%}%>
                 <li><a href="#A1">Action</a></li>
                 <li><a href="#C1">Comedy</a></li>
                 <li><a href="#D1">Drama</a></li>
-		<li><a href="#H1">Horror</a></li>
-		<li><a href="#S1">Sci-Fi</a></li>
+                <li><a href="#H1">Horror</a></li>
+                <li><a href="#S1">Sci-Fi</a></li>
               </ul>
             </li>
             <li><a href="about.html">About</a></li>
@@ -118,12 +114,11 @@
       </nav>
     </header>
     
-              
     <div class="slide-one-item home-slider owl-carousel">
-      <div class="site-blocks-cover overlay" style="background-image: url(images/Action/The_Avengers.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+      <div class="site-blocks-cover overlay" style="background-image: url(images/Drama/American_Beauty.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
         <div class="container">
           <div class="row align-items-center justify-content-start">
-			  <p><a href="http://www.youtube.com/watch?v=eOrNdBpGMv8" class="btn btn-primary btn-sm rounded-0 py-3 px-5">Watch now</a></p>
+			  <p><a href="http://www.imdb.com/video/screenplay/vi917897497/" class="btn btn-primary btn-sm rounded-0 py-3 px-5">Watch now</a></p>
           </div>
         </div>
       </div>  
@@ -136,11 +131,19 @@
         </div>
       </div>  
 
-      <div class="site-blocks-cover overlay" style="background-image: url(images/Drama/Birdy.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+	  <div class="site-blocks-cover overlay" style="background-image: url(images/Sci-Fi/Alien.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+        <div class="container">
+          <div class="row align-items-center justify-content-start">
+			  <p><a href="http://www.imdb.com/video/imdb/vi1497801241/" class="btn btn-primary btn-sm rounded-0 py-3 px-5">Watch now</a></p>
+          </div>
+        </div>
+      </div> 
+	  
+      <div class="site-blocks-cover overlay" style="background-image: url(images/Drama/Casino.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
         <div class="container">
           <div class="row align-items-center justify-content-start">
             <div class="col-md-6 text-center text-md-left" data-aos="fade-up" data-aos-delay="400">
-              <p><a href="Birdy" class="btn btn-primary btn-sm rounded-0 py-3 px-5">Watch now</a></p>
+              <p><a href="http://www.imdb.com/video/screenplay/vi1035796761/" class="btn btn-primary btn-sm rounded-0 py-3 px-5">Watch now</a></p>
             </div>
           </div>
         </div>
@@ -151,8 +154,6 @@
 		
 		<div>
 		  <!-- ACTION GENRE STARTS HERE -->
-                  
-
     <div class="site-section block-13 bg-primary fixed overlay-primary bg-image" style="background-image: url('images/hero_bg_3.jpg');"  data-stellar-background-ratio="0.5">
 
       <div class="container">
@@ -175,8 +176,22 @@
                 <div class="text">
                   <span class="meta"><% out.print(currentMovie.getReleaseDate()); %> </span>
                   <div class="text-inner">
-                    <h2 class="heading mb-3"><% out.print(currentMovie.getTitle()); %><a href = "<% out.print(currentMovie.getTrailer()); %>  " class="text-black"><% //out.print(currentMovie.getTitle()); %><span class="icon-play-circle-o"></span></a>
-                        <a href="#" class="text-secondary px-2"><span class="icon-heart"></span></a></h2>
+                    <h2 class="heading mb-3">                        
+                        <a href = "" class="text-black"><% out.print(currentMovie.getTitle()); %></a>
+			<a href="<% out.print(currentMovie.getTrailer()); %>" class="text-secondary px-2"><span class="icon-play-circle-o"></span></a>
+                        <%if (currentUser != null) {
+                            if(utility.checkFavorite(currentUser.getMemberID(), currentMovie.getID())) {%>
+						<a  class="text-secondary px-2">
+                                                    <span onclick = "myFunc(this)" class="icon-heart"></span>
+                                                </a>
+                                <%}
+                            else {%>
+                                <a  class="text-secondary px-2">
+                                                    <span onclick = "myFunc(this)" class="icon-heart-o"></span>
+                                                </a>
+                           <%}
+                        }%>
+                    </h2>
                     <p> <% out.print(currentMovie.getDescription()); %> </p>
                   </div>
                 </div>
@@ -185,9 +200,7 @@
             <%}%>
           </div>
         </div>
-
-<!-- ACTION GENRE ENDS HERE -->
-
+<!-- ACTION GENRE ENDS HERE -->   
 </div>
 <span style="border:1px solid white;height=27px;width=17px"></span>
 
@@ -214,7 +227,9 @@
                 <div class="text">
                   <span class="meta"><% out.print(currentMovie.getReleaseDate()); %> </span>
                   <div class="text-inner">
-                 <h2 class="heading mb-3"><a href = "<% out.print(currentMovie.getTrailer()); %>" class="text-black"><% out.print(currentMovie.getTitle()); %></a></h2>
+                 <h2 class="heading mb-3"><a href = "" class="text-black"><% out.print(currentMovie.getTitle()); %></a>
+					<a href="<% out.print(currentMovie.getTrailer()); %>" class="text-secondary px-2"><span class="icon-play-circle-o"></span></a>
+					<a href="#" class="text-secondary px-2"><span class="icon-heart-o"></span></a></h2>
                  <p> <% out.print(currentMovie.getDescription()); %> </p>
                   </div>
                 </div>
@@ -253,7 +268,9 @@
                 <div class="text">
                   <span class="meta"><% out.print(currentMovie.getReleaseDate()); %> </span>
                   <div class="text-inner">
-                 <h2 class="heading mb-3"><a href = "<% out.print(currentMovie.getTrailer()); %>" class="text-black"><% out.print(currentMovie.getTitle()); %></a></h2>
+                 <h2 class="heading mb-3"><a href = "" class="text-black"><% out.print(currentMovie.getTitle()); %></a>
+					<a href="<% out.print(currentMovie.getTrailer()); %>" class="text-secondary px-2"><span class="icon-play-circle-o"></span></a>
+					<a href="#" class="text-secondary px-2"><span class="icon-heart-o"></span></a></h2>
                  <p> <% out.print(currentMovie.getDescription()); %> </p>
                   </div>
                 </div>
@@ -290,7 +307,9 @@
                 <div class="text">
                   <span class="meta"><% out.print(currentMovie.getReleaseDate()); %> </span>
                   <div class="text-inner">
-                 <h2 class="heading mb-3"><a href = "<% out.print(currentMovie.getTrailer()); %>" class="text-black"><% out.print(currentMovie.getTitle()); %></a></h2>
+                 <h2 class="heading mb-3"><a href = "" class="text-black"><% out.print(currentMovie.getTitle()); %></a>
+					<a href="<% out.print(currentMovie.getTrailer()); %>" class="text-secondary px-2"><span class="icon-play-circle-o"></span></a>
+					<a href="#" class="text-secondary px-2"><span class="icon-heart-o"></span></a></h2>
                  <p> <% out.print(currentMovie.getDescription()); %> </p>
                   </div>
                 </div>
@@ -334,7 +353,9 @@
                 <div class="text">
                   <span class="meta"><% out.print(currentMovie.getReleaseDate()); %> </span>
                   <div class="text-inner">
-                 <h2 class="heading mb-3"><a href = "<% out.print(currentMovie.getTrailer()); %>" class="text-black"><% out.print(currentMovie.getTitle()); %></a></h2>
+                 <h2 class="heading mb-3"><a href = "" class="text-black"><% out.print(currentMovie.getTitle()); %></a>
+					<a href="<% out.print(currentMovie.getTrailer()); %>" class="text-secondary px-2"><span class="icon-play-circle-o"></span></a>
+					<a href="#" class="text-secondary px-2"><span class="icon-heart-o"></span></a></h2>
                  <p> <% out.print(currentMovie.getDescription()); %> </p>
                   </div>
                 </div>
@@ -351,7 +372,7 @@
 
 <!-- FAVORITES GENRE STARTS HERE -->
 
-<%if(favourites != null) {%>
+<%if(favourites != null && favourites.size() > 0) {%>
     <div class="site-section block-13 bg-primary fixed overlay-primary bg-image" style="background-image: url('images/hero_bg_3.jpg');"  data-stellar-background-ratio="0.5">
 
       <div class="container">
@@ -406,21 +427,21 @@
             </div>
 
             <div class="mb-5">
-              <h3 class="footer-heading mb-4">Recentlly Added Movies</h3>
+              <h3 class="footer-heading mb-4">Recently Added Movies</h3>
               <div class="block-25">
                 <ul class="list-unstyled">
                   <li class="mb-3">
-                    <a href="#" class="d-flex">
+                    <a href="http://www.imdb.com/video/screenplay/vi1520474905/" class="d-flex">
                       <figure class="image mr-4">
                         <img src="images/Sci-Fi/Alien_3.jpg" alt="" class="img-fluid">
                       </figure>
                       <div class="text">
-                        <h3 class="heading font-weight-light">Aliens 3</h3>
+                        <h3 class="heading font-weight-light">Alien 3</h3>
                       </div>
                     </a>
                   </li>
                   <li class="mb-3">
-                    <a href="#" class="d-flex">
+                    <a href="http://www.imdb.com/video/screenplay/vi854001177/" class="d-flex">
                       <figure class="image mr-4">
                         <img src="images/Drama/American_History_X.jpg" alt="" class="img-fluid">
                       </figure>
@@ -430,7 +451,7 @@
                     </a>
                   </li>
                   <li class="mb-3">
-                    <a href="#" class="d-flex">
+                    <a href="http://www.youtube.com/watch?v=5xgHBIHUqfc" class="d-flex">
                       <figure class="image mr-4">
                         <img src="images/Comedy/Arizona_Dream.jpg" alt="" class="img-fluid">
                       </figure>
@@ -460,7 +481,7 @@
                 <ul class="list-unstyled">
                   <li><a href="about.html">About Us</a></li>
                   <li><a href="contact.html">Contact Us</a></li>
-                  <li><a href="membership.html">Membership</a></li>
+                  <li><a href="#">Go To Top of Page</a></li>
                 </ul>
               </div>
             </div>
@@ -487,15 +508,14 @@
 
               <div class="block-16">
                 <figure>
-                  <img src="images/Comedy/Arizona_Dream.jpg" alt="Image placeholder" class="img-fluid rounded"><a href="https://www.youtube.com/watch?v=5LlQNty_C8s" class="play-button popup-vimeo"><span class="icon-play"></span></a>
+                  <img src="images/Comedy/Arizona_Dream.jpg" alt="Image placeholder" class="img-fluid rounded"><a href="http://www.youtube.com/watch?v=5xgHBIHUqfc" class="play-button popup-vimeo"><span class="icon-play"></span></a>
                 </figure>
               </div>
-
             </div>
 
             <div class="mb-5">
               <h3 class="footer-heading mb-2">Subscribe Newsletter</h3>
-              <p>We are devoted to spreading the love by making all of our services free for those who subscribe to our news letter</p>
+              <p>We are devoted to spreadiang the love by making all of our services free for those who subscribe to our news letter</p>
 
               <form action="#" method="post">
                 <div class="input-group mb-3">

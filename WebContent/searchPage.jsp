@@ -72,25 +72,14 @@
 
         <div class="container position-relative">
           <div class="site-logo">
-            <a href="index.html"><img src="images/logo.png" alt=""></a>
+            <a href="index.jsp"><img src="images/logo.png" alt=""></a>
           </div>
 
           <div class="d-inline-block d-md-none ml-md-0 mr-auto py-3"><a href="#" class="site-menu-toggle js-menu-toggle text-white"><span class="icon-menu h3"></span></a></div>
 
           <ul class="site-menu js-clone-nav d-none d-md-block">
-             <li><a href="index.html"><b>Home</b></a> </li>
+             <li><a href="index.jsp"><b>Home</b></a> </li>
             <li class="has-children">
-                <!--
-              <a>Genre</a>
-              <ul class="dropdown arrow-top">
-                                <li><a href="#F1">Favorites</a></li>
-                <li><a href="#A1">Action</a></li>
-                <li><a href="#C1">Comedy</a></li>
-                <li><a href="#D1">Drama</a></li>
-                                <li><a href="#H1">Horror</a></li>
-                                <li><a href="#S1">Sci-Fi</a></li>
-              </ul>
-                -->
             </li>
             <li><a href="about.html">About</a></li>
             <li><a href="contact.html">Contact</a></li>
@@ -107,7 +96,6 @@
             <div class="row mb-5">
               <div class="col-md-12 text-center">
                 <h2 id = "A1" class="text-white">Movies found with: <%out.print(request.getParameter("searchValue"));%></h2>
-<!--BROKEN-->
                 <%for (int i = 0; i < searchResults.size(); ++i){
                     Movie currentMovie = searchResults.get(i);%>
                     <div class="item">
@@ -126,7 +114,6 @@
                       </div>
                     </div>
                 <%}%>
-
               </div>
             </div>
             <img src="image.jpg" alt="Trulli" width="500" height="333">
@@ -196,7 +183,7 @@
 			  
               <div class="col-md-6 col-lg-6">
                 <ul class="list-unstyled">
-                  <li><a href="index.html">Home</a></li>
+                  <li><a href="index.jsp">Home</a></li>
                 </ul>
               </div>
               <div class="col-md-6 col-lg-6">
