@@ -2,6 +2,7 @@
 <%@page import = "java.util.ArrayList"%>
 <%@page import = "piratePackage.*"%>
 <html lang="en">
+    
   <head>
     <%
         HttpSession sess = request.getSession();
@@ -18,7 +19,19 @@
             favourites = utility.getFavorites(currentUser.getMemberID());
         }
     %>
-    
+    <script>
+          function myFunc(movieID){
+              
+              if ( <% utility.toggleFavorites(currentUser.getMemberID(), (int)session.getAttribute("currentMovieID") ); %> ) {
+                  //print full heart
+                  document.getElementById("fullHeart").innerHTML = &#9825;
+              }
+              else{
+                  //print heart-o
+                  document.getElementById("emptyHeart").innerHTML = &#9829;
+              }
+          }
+  </script>
     <title>Da Pirate Bae &mdash; The Nations Leading Streaming Service</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -181,14 +194,14 @@
 			<a href="<% out.print(currentMovie.getTrailer()); %>" class="text-secondary px-2"><span class="icon-play-circle-o"></span></a>
                         <%if (currentUser != null) {
                             if(utility.checkFavorite(currentUser.getMemberID(), currentMovie.getID())) {%>
-						<a  class="text-secondary px-2">
-                                                    <span onclick = "myFunc(this)" class="icon-heart"></span>
-                                                </a>
+                                <a  class="text-secondary px-2">
+                                    <span id="fullHeart" onclick = "myFunc(<%session.setAttribute("currentMovieID", currentMovie.getID());%>)">&#9825</span>
+                                </a>
                                 <%}
                             else {%>
                                 <a  class="text-secondary px-2">
-                                                    <span onclick = "myFunc(this)" class="icon-heart-o"></span>
-                                                </a>
+                                    <span id="emptyHeart" onclick = "myFunc(<%session.setAttribute("currentMovieID", currentMovie.getID());%>)">&#9829</span>
+                               </a>
                            <%}
                         }%>
                     </h2>
