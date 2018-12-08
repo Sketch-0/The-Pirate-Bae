@@ -1,6 +1,5 @@
 package piratePackage;
 
-//import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -9,15 +8,21 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.*;
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
 
 
 public class PirateUtility extends HttpServlet {    
     //the persistent connection object to use across the class
     Connection connection;
     
-    //creates the connection 
+    //creates the connection
     public PirateUtility(){
         this.connection = getConnection();
+    }
+    
+    public void init() throws ServletException {        
     }
     
     //create a connection object by using the local mysql databse
@@ -122,43 +127,53 @@ public class PirateUtility extends HttpServlet {
         String expMonth,
         String ccType
         ) throws Exception {
+        int i = 0;
+        //table has 28 values
         
+        String insertQuery = "insert into member(levelName, userName, firstName, lastName, billAddressLine1,billAddressLine2, billCity, billState, billZipCodeshipAddressLine1, shipAddressLine2, shipCity, shipState, shipZipCode,phoneNumber,emailAddress, memberPassword, memberSince, activeStatus, genrePreference, creditCardCCV,creditCardNumber, cardHolderFirstName, cardHolderLastName,expYear, expMonth, ccType) values (?,?,?,?,? ,?,?,?,?,? ,?,?,?,?,? ,?,?,?,?,? ,?,?,?,?,?   ,?,?   )";
+        
+        /*
         PreparedStatement signUp = this.connection.prepareStatement("insert into member("
-            		+ "userName, firstName, lastName, billAddressLine1,"
+            		+ "levelName, userName, firstName, lastName, billAddressLine1,"
             		+ "billAddressLine2, billCity, billState, billZipCode"
             		+ "shipAddressLine1, shipAddressLine2, shipCity, shipState, shipZipCode,"
-            		+ "phoneNumber,emailAddress, memberPassword, memberSince, genrePreference, creditCardCCV,"
+            		+ "phoneNumber,emailAddress, memberPassword, memberSince, activeStatus, genrePreference, creditCardCCV,"
             		+ "creditCardNumber, cardHolderFirstName, cardHolderLastName,"
-            		+ "expYear, expMonth, ccType) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",  Statement.RETURN_GENERATED_KEYS);
-            signUp.setString(2, levelName.toString());
-            signUp.setString(3, userName.toString());
-            signUp.setString(4, firstName.toString());
-            signUp.setString(5, lastName.toString());
-            signUp.setString(6, billAddressLine1.toString());
-            signUp.setString(7, billAddressLine2.toString());
-            signUp.setString(8, billCity.toString());
-            signUp.setString(9, billState.toString());
-            signUp.setString(10, billZipCode.toString());
-            signUp.setString(11, shipAddressLine1.toString());
-            signUp.setString(12, shipAddressLine2.toString());
-            signUp.setString(13, shipCity.toString());
-            signUp.setString(14, shipState.toString());
-            signUp.setString(15, shipZipCode.toString());
-            signUp.setString(16, phoneNumber.toString());
-            signUp.setString(17, emailAddress.toString());
-            signUp.setString(18, memberPassword.toString());
-            signUp.setString(19, memberSince.toString());
-            signUp.setString(20, genrePreference.toString());
-            signUp.setString(22, creditCardCCV.toString());
-            signUp.setString(23, creditCardNumber.toString());
-            signUp.setString(24, cardHolderFirstName.toString());
-            signUp.setString(25, cardHolderLastName.toString());
-            signUp.setString(26, expYear.toString());
-            signUp.setString(27, expMonth.toString());
-            signUp.setString(28, ccType.toString());
-            signUp.getGeneratedKeys();
+            		+ "expYear, expMonth, ccType) values (?,?,?,?,? ,?,?,?,?,? ,?,?,?,?,? ,?,?,?,?,? ,?,?,?,?,?   ,?,?   )",  Statement.RETURN_GENERATED_KEYS);
+        */
+        
+        PreparedStatement signUp = this.connection.prepareStatement(insertQuery);
+        //27 or 28
+        //signUp.setInt(0 + i, 12345);
+            signUp.setString(1 + i, levelName);
+            signUp.setString(2 + i, userName);
+            signUp.setString(3 + i, firstName);
+            signUp.setString(4 + i, lastName);
+            signUp.setString(5 + i, billAddressLine1);
+            signUp.setString(6 + i, billAddressLine2);
+            signUp.setString(7 + i, billCity);
+            signUp.setString(8 + i, billState);
+            signUp.setString(9 + i, billZipCode);
+            signUp.setString(10 + i, shipAddressLine1);
+            signUp.setString(11 + i, shipAddressLine2);
+            signUp.setString(12 + i, shipCity);
+            signUp.setString(13 + i, shipState);
+            signUp.setString(14 + i, shipZipCode);
+            signUp.setString(15 + i, phoneNumber);
+            signUp.setString(16 + i, emailAddress);
+            signUp.setString(17 + i, memberPassword);
+            signUp.setString(18 + i, memberSince);
+            signUp.setInt(19 + i, 1);
+            signUp.setString(20 + i, genrePreference);
+            signUp.setString(21 + i, creditCardCCV);
+            signUp.setString(22 + i, creditCardNumber);
+            signUp.setString(23 + i, cardHolderFirstName);
+            signUp.setString(24 + i, cardHolderLastName);
+            signUp.setString(25 + i, expYear);
+            signUp.setString(26 + i, expMonth);
+            signUp.setString(27 + i, ccType);            
+            //signUp.getGeneratedKeys();
             signUp.executeUpdate();
-
     }
     
     public Movie getMovie(int movieID) throws Exception {
@@ -337,48 +352,61 @@ public class PirateUtility extends HttpServlet {
         return false;
     }
     
-
-    /*
-    //broken; if you can get it working, go for it
-
-    public static void printMovies(ArrayList<Movie> movies, String genre, HttpServletResponse response) throws Exception{
-        response.setContentType("text/html");
+    public void printMovie(String genre, HttpServletResponse response) throws Exception {
         PrintWriter out = response.getWriter();
         
-        out.print("<div class= 'site-section block-13 bg-primary fixed overlay-primary bg-image' style= 'background-image: url('images/hero_bg_3.jpg');'  data-stellar-background-ratio='0.5'>)");
+        ArrayList<Movie> movieList = this.getGenre(genre);
+        Movie currentMovie = null;
+        
+        out.println(
+                    "<div class='site-section block-13 bg-primary fixed overlay-primary bg-image' style='background-image: url('images/hero_bg_3.jpg');'  data-stellar-background-ratio='0.5'>" +
+                    "<div class='container'>" +
+                      "<div class='row mb-5'>" +
+                        "<div class='col-md-12 text-center'>" +
+                          "<h2 id = 'A1' class='text-white'>Action</h2>" +
+                        "</div>" +
+                      "</div>" +
+                      "<div class='row'>" +
+                        "<div class='nonloop-block-13 owl-carousel'>"
+        );
+        
+        for (int i = 0; i < movieList.size(); ++i) {
+            currentMovie = movieList.get(i);
+            
+            out.println(
+                "<div class='item'>" + 
+                  "<div class='block-12'>" +
+                    "<figure>" +
+                        "<img src= 'images/" + genre + "/'" + currentMovie.getImage() + "alt='Image' class='img-fluid'>" +
+                    "</figure>" +
+                    "<div class='text'>" +
+                      "<span class='meta'>" + currentMovie.getReleaseDate() + "</span>" +
+                      "<div class='text-inner'>" +
+                        "<h2 class='heading mb-3'>" +
+                            "<a href = '' class='text-black'>" + currentMovie.getTitle() + "</a>" +
+                            "<a href='" + currentMovie.getTrailer() + "' class='text-secondary px-2'><span class='icon-play-circle-o'></span></a>" +                    
+                            /*if (currentUser != null) {
 
-        out.print("<div class='container'>");
-          out.print("<div class='row mb-5'>");
-            out.print("<div class='col-md-12 text-center'>");
-              out.print("<h2 id = 'A1' class='text-white'>Drama</h2>");
-            out.print("</div>");
-          out.print("</div>");
+                                sess.setAttribute('', currentMovie.getID());
 
-          out.print("<div class='row'>");
-            out.print("<div class='nonloop-block-13 owl-carousel'>");
-
-              for (int i = 0; i < movies.size(); ++i){
-                  Movie currentMovie = movies.get(i);
-
-                  out.print("<div class='item'>");
-                    out.print("<div class='block-12'>");
-                      out.print("<figure>");
-                          out.print("<img src=" + currentMovie.getImage() + "alt='Image' class='img-fluid'>");
-                      out.print("</figure>");
-                      out.print("<div class='text'>");
-                          out.print("<span class='meta'> out.print(currentMovie.getReleaseDate()) </span>");
-                          out.print("<div class='text-inner'>");
-                         out.print("<h2 class='heading mb-3'><a href =" + currentMovie.getTrailer() + "class='text-black'></a>" + currentMovie.getTitle() + "</h2>");
-                         out.print("<p>" +  currentMovie.getDescription() + "</p>");
-                        out.print("</div>");
-                      out.print("</div>");
-                    out.print("</div>");
-                  out.print("</div>");
-              }
-
-            out.print("</div>");
-          out.print("</div>");
-                  
+                                if(utility.checkFavorite(currentUser.getMemberID(), currentMovie.getID())) {
+                                    <a href = 'addFavourite.jsp' class='text-secondary px-2'>
+                                        <span id='fullHeart' >&#9825</span>
+                                    </a>
+                                    <
+                                else {
+                                    <a href = 'addFavourite.jsp' class='text-secondary px-2'>
+                                        <span id='emptyHeart' >&#9829</span>
+                                   </a>
+                               }
+                            }*/
+                        "</h2>" +
+                        "<p>" + currentMovie.getDescription() + "</p>" +
+                      "</div>" +
+                    "</div>" +
+                  "</div>" +
+                "</div>"
+                );
+            }
     }
-    */
 }

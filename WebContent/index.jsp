@@ -19,19 +19,7 @@
             favourites = utility.getFavorites(currentUser.getMemberID());
         }
     %>
-    <script>
-          function myFunc(movieID){
-              
-              if ( <% utility.toggleFavorites(currentUser.getMemberID(), (int)session.getAttribute("currentMovieID") ); %> ) {
-                  //print full heart
-                  document.getElementById("fullHeart").innerHTML = &#9825;
-              }
-              else{
-                  //print heart-o
-                  document.getElementById("emptyHeart").innerHTML = &#9829;
-              }
-          }
-  </script>
+    
     <title>Da Pirate Bae &mdash; The Nations Leading Streaming Service</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -165,21 +153,19 @@
    		
 		
 		
-		<div>
-		  <!-- ACTION GENRE STARTS HERE -->
+<div>
     <div class="site-section block-13 bg-primary fixed overlay-primary bg-image" style="background-image: url('images/hero_bg_3.jpg');"  data-stellar-background-ratio="0.5">
 
       <div class="container">
         <div class="row mb-5">
           <div class="col-md-12 text-center">
-            <h2 id = "A1" class="text-white">Action</h2>
+            <h2 id = "A1" class="text-white">Comedy</h2>
           </div>
         </div>          
           
         <div class="row">
           <div class="nonloop-block-13 owl-carousel">
-          
-            <%for (int i = 0; i < actionMovies.size(); ++i){
+    <%for (int i = 0; i < actionMovies.size(); ++i){
                 Movie currentMovie = actionMovies.get(i);%>
             <div class="item">
               <div class="block-12">
@@ -193,14 +179,17 @@
                         <a href = "" class="text-black"><% out.print(currentMovie.getTitle()); %></a>
 			<a href="<% out.print(currentMovie.getTrailer()); %>" class="text-secondary px-2"><span class="icon-play-circle-o"></span></a>
                         <%if (currentUser != null) {
+                            
+                            sess.setAttribute("", currentMovie.getID());
+                            
                             if(utility.checkFavorite(currentUser.getMemberID(), currentMovie.getID())) {%>
-                                <a  class="text-secondary px-2">
-                                    <span id="fullHeart" onclick = "myFunc(<%session.setAttribute("currentMovieID", currentMovie.getID());%>)">&#9825</span>
+                                <a href = "addFavourite.jsp" class="text-secondary px-2">
+                                    <span id="fullHeart" >&#9825</span>
                                 </a>
                                 <%}
                             else {%>
-                                <a  class="text-secondary px-2">
-                                    <span id="emptyHeart" onclick = "myFunc(<%session.setAttribute("currentMovieID", currentMovie.getID());%>)">&#9829</span>
+                                <a href = "addFavourite.jsp" class="text-secondary px-2">
+                                    <span id="emptyHeart" >&#9829</span>
                                </a>
                            <%}
                         }%>
@@ -211,13 +200,12 @@
               </div>
             </div>
             <%}%>
-          </div>
-        </div>
-<!-- ACTION GENRE ENDS HERE -->   
+    </div>
 </div>
+
 <span style="border:1px solid white;height=27px;width=17px"></span>
 
-		  <!-- COMEDY GENRE STARTS HERE -->
+<!-- COMEDY GENRE STARTS HERE -->
     <div class="site-section block-13 bg-primary fixed overlay-primary bg-image" style="background-image: url('images/hero_bg_3.jpg');"  data-stellar-background-ratio="0.5">
 
       <div class="container">
@@ -251,10 +239,9 @@
             <%}%>
           </div>
         </div>
-          
 <!-- Comedy GENRE ENDS HERE -->
 
-</div>
+
 <span style="border:1px solid white;height=27px;width=17px"></span>
 
 		  <!-- DRAMA GENRE STARTS HERE -->
