@@ -7,22 +7,15 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import javax.servlet.http.*;
-import java.io.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
 
 
-public class PirateUtility extends HttpServlet {    
+public class PirateUtility {    
     //the persistent connection object to use across the class
     Connection connection;
     
     //creates the connection
     public PirateUtility(){
         this.connection = getConnection();
-    }
-    
-    public void init() throws ServletException {        
     }
     
     //create a connection object by using the local mysql databse
@@ -350,63 +343,5 @@ public class PirateUtility extends HttpServlet {
         }
         //user is not in the database
         return false;
-    }
-    
-    public void printMovie(String genre, HttpServletResponse response) throws Exception {
-        PrintWriter out = response.getWriter();
-        
-        ArrayList<Movie> movieList = this.getGenre(genre);
-        Movie currentMovie = null;
-        
-        out.println(
-                    "<div class='site-section block-13 bg-primary fixed overlay-primary bg-image' style='background-image: url('images/hero_bg_3.jpg');'  data-stellar-background-ratio='0.5'>" +
-                    "<div class='container'>" +
-                      "<div class='row mb-5'>" +
-                        "<div class='col-md-12 text-center'>" +
-                          "<h2 id = 'A1' class='text-white'>Action</h2>" +
-                        "</div>" +
-                      "</div>" +
-                      "<div class='row'>" +
-                        "<div class='nonloop-block-13 owl-carousel'>"
-        );
-        
-        for (int i = 0; i < movieList.size(); ++i) {
-            currentMovie = movieList.get(i);
-            
-            out.println(
-                "<div class='item'>" + 
-                  "<div class='block-12'>" +
-                    "<figure>" +
-                        "<img src= 'images/" + genre + "/'" + currentMovie.getImage() + "alt='Image' class='img-fluid'>" +
-                    "</figure>" +
-                    "<div class='text'>" +
-                      "<span class='meta'>" + currentMovie.getReleaseDate() + "</span>" +
-                      "<div class='text-inner'>" +
-                        "<h2 class='heading mb-3'>" +
-                            "<a href = '' class='text-black'>" + currentMovie.getTitle() + "</a>" +
-                            "<a href='" + currentMovie.getTrailer() + "' class='text-secondary px-2'><span class='icon-play-circle-o'></span></a>" +                    
-                            /*if (currentUser != null) {
-
-                                sess.setAttribute('', currentMovie.getID());
-
-                                if(utility.checkFavorite(currentUser.getMemberID(), currentMovie.getID())) {
-                                    <a href = 'addFavourite.jsp' class='text-secondary px-2'>
-                                        <span id='fullHeart' >&#9825</span>
-                                    </a>
-                                    <
-                                else {
-                                    <a href = 'addFavourite.jsp' class='text-secondary px-2'>
-                                        <span id='emptyHeart' >&#9829</span>
-                                   </a>
-                               }
-                            }*/
-                        "</h2>" +
-                        "<p>" + currentMovie.getDescription() + "</p>" +
-                      "</div>" +
-                    "</div>" +
-                  "</div>" +
-                "</div>"
-                );
-            }
     }
 }

@@ -2,11 +2,17 @@
 <%@page import = "java.util.ArrayList"%>
 <%@page import = "piratePackage.*"%>
 <html lang="en">
+    <script>
+        function toggleFavs(){
+            
+        }
+    </script
     
   <head>
     <%
         HttpSession sess = request.getSession();
         User currentUser = (User) sess.getAttribute("member");
+        
         PirateUtility utility = new PirateUtility();
         
         ArrayList<Movie> actionMovies = utility.getGenre("Action");
@@ -165,7 +171,7 @@
           
         <div class="row">
           <div class="nonloop-block-13 owl-carousel">
-    <%for (int i = 0; i < actionMovies.size(); ++i){
+        <%for (int i = 0; i < actionMovies.size(); ++i){
                 Movie currentMovie = actionMovies.get(i);%>
             <div class="item">
               <div class="block-12">
@@ -178,21 +184,20 @@
                     <h2 class="heading mb-3">                        
                         <a href = "" class="text-black"><% out.print(currentMovie.getTitle()); %></a>
 			<a href="<% out.print(currentMovie.getTrailer()); %>" class="text-secondary px-2"><span class="icon-play-circle-o"></span></a>
-                        <%if (currentUser != null) {
+                        <%if (currentUser != null) {%>
                             
-                            sess.setAttribute("", currentMovie.getID());
-                            
-                            if(utility.checkFavorite(currentUser.getMemberID(), currentMovie.getID())) {%>
-                                <a href = "addFavourite.jsp" class="text-secondary px-2">
+                            <form action = "favouritesServer" method = "post" >
+                            <input type = "hidden" name = "movieID" value = "<%out.print(currentMovie.getID());%>"></input>
+                            <%if(utility.checkFavorite(currentUser.getMemberID(), currentMovie.getID())) {%>
+                                <button type = "submit" class="text-secondary px-2">
                                     <span id="fullHeart" >&#9825</span>
-                                </a>
                                 <%}
                             else {%>
-                                <a href = "addFavourite.jsp" class="text-secondary px-2">
+                                <button type = "submit" class="text-secondary px-2">
                                     <span id="emptyHeart" >&#9829</span>
-                               </a>
-                           <%}
-                        }%>
+                           <%}%>
+                            </form>
+                        <%}%>
                     </h2>
                     <p> <% out.print(currentMovie.getDescription()); %> </p>
                   </div>

@@ -18,7 +18,7 @@
             int memberID = utility.validate(enteredUsername, enteredPass);
             
             if(memberID != -1){
-                login.setAttribute("member", new User(memberID));                
+                login.setAttribute("member", new User(memberID));
                 response.sendRedirect("index.jsp");
             }
             

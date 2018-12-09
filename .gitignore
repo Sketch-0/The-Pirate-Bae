@@ -6,7 +6,7 @@ nbproject/
 dist/
 nbdist/
 .nb-gradle/
-
+.nb-build
 
 .metadata
 bin/
