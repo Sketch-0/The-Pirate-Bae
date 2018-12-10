@@ -1,13 +1,7 @@
 <!DOCTYPE html>
 <%@page import = "java.util.ArrayList"%>
 <%@page import = "piratePackage.*"%>
-<html lang="en">
-    <script>
-        function toggleFavs(){
-            
-        }
-    </script
-    
+<html lang="en">    
   <head>
     <%
         HttpSession sess = request.getSession();
@@ -190,11 +184,13 @@
                             <input type = "hidden" name = "movieID" value = "<%out.print(currentMovie.getID());%>"></input>
                             <%if(utility.checkFavorite(currentUser.getMemberID(), currentMovie.getID())) {%>
                                 <button type = "submit" class="text-secondary px-2">
-                                    <span id="fullHeart" >&#9825</span>
+                                    <!-- <span id="fullHeart" >&#9825</span> -->
+                                    <span id="emptyHeart" >&#9829</span>
                                 <%}
                             else {%>
                                 <button type = "submit" class="text-secondary px-2">
-                                    <span id="emptyHeart" >&#9829</span>
+                                    <!-- <span id="emptyHeart" >&#9829</span> -->
+                                    <span id="fullHeart" >&#9825</span>
                            <%}%>
                             </form>
                         <%}%>

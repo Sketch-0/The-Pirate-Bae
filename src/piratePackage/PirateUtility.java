@@ -311,19 +311,36 @@ public class PirateUtility {
     }
     
     public boolean toggleFavorites(int memberID, int movieID) throws Exception {
-        Statement st = this.connection.createStatement();
-
+        Statement statement = this.connection.createStatement();
+        PreparedStatement insert = this.connection.prepareStatement("insert into favorite (memberID, movieID, movieTitle) values (?, ?, ? );");
+        PreparedStatement remove = this.connection.prepareStatement("delete from favorite where memberID = ? and movieID = ?;");
+        
+        ResultSet getTitle = statement.executeQuery("select movieTitle from movie where movieID = '" + movieID + "';");
+        getTitle.next();
+        
         //ResultSet favoriteID = st.executeQuery("select count(*) from favorite where memberID = '" + memberID + "' AND movieID = '" + movieID + "';");
         //favoriteID.next();
 
         if(!this.checkFavorite(memberID, movieID)) {
-            ResultSet getTitle = st.executeQuery("select movieTitle from movie where movieID = '" + movieID + "';");
-            getTitle.next();
-            ResultSet starValue = st.executeQuery("replace into favorite (memberID, movieID, movieTitle) -> values ( '" + memberID + "', '" + movieID +"', '" + getTitle.getString(1) + "');");
+            
+            insert.setInt(1, memberID);
+            insert.setInt(2, movieID);            
+            insert.setString(3, getTitle.getString(1));
+            
+            insert.executeUpdate();
+            
+            //ResultSet starValue = st.executeQuery("replace into favorite (memberID, movieID, movieTitle) -> values ( '" + memberID + "', '" + movieID +"', '" + getTitle.getString(1) + "');");
+            
             return true;	//Indicates addition to Favorites
         }
         else {
-            ResultSet starValue = st.executeQuery("delete from favorite where memberID = '" + memberID + "' AND movieID = '" + movieID + "';");
+            
+            remove.setInt(1, memberID);
+            remove.setInt(2, movieID);
+            
+            remove.executeUpdate();
+            //ResultSet starValue = st.executeQuery("delete from favorite where memberID = '" + memberID + "' AND movieID = '" + movieID + "';");
+            
             return false;	//Indicates removal from Favorites
         }
     }
