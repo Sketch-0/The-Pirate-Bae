@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <%@page import = "java.util.ArrayList"%>
 <%@page import = "piratePackage.*"%>
-<html lang="en">
+<html lang="en">    
   <head>
     <%
         HttpSession sess = request.getSession();
         User currentUser = (User) sess.getAttribute("member");
+        
         PirateUtility utility = new PirateUtility();
         
-        //ArrayList<Movie> favourites = currentUser //getFavourites()
         ArrayList<Movie> actionMovies = utility.getGenre("Action");
         ArrayList<Movie> comedyMovies = utility.getGenre("Comedy");
         ArrayList<Movie> dramaMovies = utility.getGenre("Drama");
         ArrayList<Movie> horrorMovies = utility.getGenre("Horror");
         ArrayList<Movie> scifiMovies = utility.getGenre("Sci-Fi");
+        ArrayList<Movie> favourites = null;
+        if(currentUser != null){
+            favourites = utility.getFavorites(currentUser.getMemberID());
+        }
     %>
     
     <title>Da Pirate Bae &mdash; The Nations Leading Streaming Service</title>
@@ -56,19 +60,19 @@
         <div class="container">
           <div class="row align-items-center">
             <div class="col-6 col-md-3">
-              <a href="#" class="text-secondary px-2 pl-0"><span class="icon-facebook"></span></a>
-              <a href="#" class="text-secondary px-2"><span class="icon-instagram"></span></a>
-              <a href="#" class="text-secondary px-2"><span class="icon-twitter"></span></a>
+              <a href="https://www.facebook.com/Da-Pirate-Bae-2696397500586219/?modal=admin_todo_tour" class="text-secondary px-2 pl-0"><span class="icon-facebook"></span></a>
+              <a href="https://www.instagram.com/dapiratebae/" class="text-secondary px-2"><span class="icon-instagram"></span></a>
+              <a href="https://twitter.com/DaPirateBae1" class="text-secondary px-2"><span class="icon-twitter"></span></a>
 
            <div class="mb-5">
-             <form action="#" method="post">
-               <div class="input-group mb-3">
-                 <input type="text" placeholder="Search" aria-describedby="button-addon2">
-                 <div class="input-group-append">
-                   <button class="btn btn-primary" type="button" id="button-addon2">Search</button>
-                 </div>
-               </div>
-             </form>
+             <form method="post" action = "searchPage.jsp">
+                <div class="input-group mb-3">
+                  <input type="text" placeholder="Search" aria-describedby="button-addon2" name = "searchValue">
+                  <div class="input-group-append">
+                      <input type ="submit" value = "Search">
+                  </div>
+                </div>
+              </form>
            </div>
 		   
             </div>
@@ -96,12 +100,12 @@
             <li class="has-children">
               <a>Genre</a>
               <ul class="dropdown arrow-top">
-		<li><a href="#F1">Favorites</a></li>
+		<%if(favourites != null && favourites.size() > 0){%><li><a href="#F1">Favourites</a></li><%}%>
                 <li><a href="#A1">Action</a></li>
                 <li><a href="#C1">Comedy</a></li>
                 <li><a href="#D1">Drama</a></li>
-				<li><a href="#H1">Horror</a></li>
-				<li><a href="#S1">Sci-Fi</a></li>
+                <li><a href="#H1">Horror</a></li>
+                <li><a href="#S1">Sci-Fi</a></li>
               </ul>
             </li>
             <li><a href="about.html">About</a></li>
@@ -149,8 +153,7 @@
    		
 		
 		
-		<div>
-		  <!-- ACTION GENRE STARTS HERE -->
+<div>
     <div class="site-section block-13 bg-primary fixed overlay-primary bg-image" style="background-image: url('images/hero_bg_3.jpg');"  data-stellar-background-ratio="0.5">
 
       <div class="container">
@@ -162,8 +165,7 @@
           
         <div class="row">
           <div class="nonloop-block-13 owl-carousel">
-          
-            <%for (int i = 0; i < actionMovies.size(); ++i){
+        <%for (int i = 0; i < actionMovies.size(); ++i){
                 Movie currentMovie = actionMovies.get(i);%>
             <div class="item">
               <div class="block-12">
@@ -173,22 +175,38 @@
                 <div class="text">
                   <span class="meta"><% out.print(currentMovie.getReleaseDate()); %> </span>
                   <div class="text-inner">
-                    <h2 class="heading mb-3"><a href = "" class="text-black"><% out.print(currentMovie.getTitle()); %></a>
-						<a href="<% out.print(currentMovie.getTrailer()); %>" class="text-secondary px-2"><span class="icon-play-circle-o"></span></a>
-						<a href="#" class="text-secondary px-2"><span class="icon-heart-o"></span></a></h2>
+                    <h2 class="heading mb-3">                        
+                        <a href = "" class="text-black"><% out.print(currentMovie.getTitle()); %></a>
+			<a href="<% out.print(currentMovie.getTrailer()); %>" class="text-secondary px-2"><span class="icon-play-circle-o"></span></a>
+                        <%if (currentUser != null) {%>
+                            
+                            <form action = "favouritesServer" method = "post" >
+                            <input type = "hidden" name = "movieID" value = "<%out.print(currentMovie.getID());%>"></input>
+                            <%if(utility.checkFavorite(currentUser.getMemberID(), currentMovie.getID())) {%>
+                                <button type = "submit" class="text-secondary px-2" >
+                                    <!-- <span id="fullHeart" >&#9825</span> -->
+                                    <span id="emptyHeart" class="icon-heart-o"></span>
+                                <%}
+                            else {%>
+                                <button type = "submit" class="text-secondary px-2">
+                                    <!-- <span id="emptyHeart" >&#9829</span> -->
+                                    <span id="fullHeart" class="icon-heart"></span>
+                           <%}%>
+                            </form>
+                        <%}%>
+                    </h2>
                     <p> <% out.print(currentMovie.getDescription()); %> </p>
                   </div>
                 </div>
               </div>
             </div>
             <%}%>
-          </div>
-        </div>
-<!-- ACTION GENRE ENDS HERE -->   
+    </div>
 </div>
+
 <span style="border:1px solid white;height=27px;width=17px"></span>
 
-		  <!-- COMEDY GENRE STARTS HERE -->
+<!-- COMEDY GENRE STARTS HERE -->
     <div class="site-section block-13 bg-primary fixed overlay-primary bg-image" style="background-image: url('images/hero_bg_3.jpg');"  data-stellar-background-ratio="0.5">
 
       <div class="container">
@@ -222,10 +240,9 @@
             <%}%>
           </div>
         </div>
-          
 <!-- Comedy GENRE ENDS HERE -->
 
-</div>
+
 <span style="border:1px solid white;height=27px;width=17px"></span>
 
 		  <!-- DRAMA GENRE STARTS HERE -->
@@ -355,34 +372,40 @@
 <span style="border:1px solid white;height=27px;width=17px"></span>
 
 <!-- FAVORITES GENRE STARTS HERE -->
+
+<%if(favourites != null && favourites.size() > 0) {%>
     <div class="site-section block-13 bg-primary fixed overlay-primary bg-image" style="background-image: url('images/hero_bg_3.jpg');"  data-stellar-background-ratio="0.5">
 
       <div class="container">
         <div class="row mb-5">
           <div class="col-md-12 text-center">
-            <h2 id = "F1" class="text-white">Favorites</h2>
+            <h2 id = "A1" class="text-white">Favourites</h2>
           </div>
-        </div>
-		
-        <div class="item">
-          <!-- uses .block-12 -->
-          <div class="block-12">
-            <figure>
-              <img src="images/Horror/Blair_Witch2.jpg" alt="Image" class="img-fluid">
-            </figure>
-            <div class="text">
-              <span class="meta">May 20th 2018</span>
-              <div class="text-inner">
-                <h2 class="heading mb-3"><a href="#F1" class="text-black">Prometheus</a></h2>
-                <p>   Get from dataBase  </p>
+        </div>          
+          
+        <div class="row">
+          <div class="nonloop-block-13 owl-carousel">
+          
+            <%for (int i = 0; i < favourites.size(); ++i){
+                Movie currentMovie = favourites.get(i);%>
+            <div class="item">
+              <div class="block-12">
+                <figure>
+                    <img src= "images/<%out.print(currentMovie.getGenre());%>/<%out.print(currentMovie.getImage()); %>" alt="Image" class="img-fluid">
+                </figure>
+                <div class="text">
+                  <span class="meta"><% out.print(currentMovie.getReleaseDate()); %> </span>
+                  <div class="text-inner">
+                    <h2 class="heading mb-3"><a href = <% out.print(currentMovie.getTrailer()); %> class="text-black"><% out.print(currentMovie.getTitle()); %></a></h2>
+                    <p> <% out.print(currentMovie.getDescription()); %> </p>
+                  </div>
+                </div>
               </div>
             </div>
+            <%}%>
           </div>
         </div>
-      </div>
-        </div>
-      </div>      
-    </div>
+          <%}%>
 <!-- FAVORITES GENRE ENDS HERE -->
 
 </div>
