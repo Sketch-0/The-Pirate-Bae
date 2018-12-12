@@ -5,8 +5,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 
 
 public class PirateUtility {    
@@ -121,23 +124,19 @@ public class PirateUtility {
         String ccType
         ) throws Exception {
         int i = 0;
-        //table has 28 values
         
-        String insertQuery = "insert into member(levelName, userName, firstName, lastName, billAddressLine1,billAddressLine2, billCity, billState, billZipCodeshipAddressLine1, shipAddressLine2, shipCity, shipState, shipZipCode,phoneNumber,emailAddress, memberPassword, memberSince, activeStatus, genrePreference, creditCardCCV,creditCardNumber, cardHolderFirstName, cardHolderLastName,expYear, expMonth, ccType) values (?,?,?,?,? ,?,?,?,?,? ,?,?,?,?,? ,?,?,?,?,? ,?,?,?,?,?   ,?,?   )";
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+        LocalDateTime now = LocalDateTime.now();
         
-        /*
         PreparedStatement signUp = this.connection.prepareStatement("insert into member("
-            		+ "levelName, userName, firstName, lastName, billAddressLine1,"
-            		+ "billAddressLine2, billCity, billState, billZipCode"
-            		+ "shipAddressLine1, shipAddressLine2, shipCity, shipState, shipZipCode,"
-            		+ "phoneNumber,emailAddress, memberPassword, memberSince, activeStatus, genrePreference, creditCardCCV,"
-            		+ "creditCardNumber, cardHolderFirstName, cardHolderLastName,"
-            		+ "expYear, expMonth, ccType) values (?,?,?,?,? ,?,?,?,?,? ,?,?,?,?,? ,?,?,?,?,? ,?,?,?,?,?   ,?,?   )",  Statement.RETURN_GENERATED_KEYS);
-        */
+        + "levelName, userName, firstName, lastName, billAddressLine1,"
+        + "billAddressLine2, billCity, billState, billZipCode,"
+        + "shipAddressLine1, shipAddressLine2, shipCity, shipState, shipZipCode,"
+        + "phoneNumber,emailAddress, memberPassword, memberSince, activeStatus, genrePreference, creditCardCCV,"
+        + "creditCardNumber, cardHolderFirstName, cardHolderLastName,"
+        + "expYear, expMonth, ccType) values (?,?,?,?,? ,?,?,?,?,? ,?,?,?,?,? ,?,?,?,?,? ,?,?,?,?,?   ,?,?)");//,  Statement.RETURN_GENERATED_KEYS);
         
-        PreparedStatement signUp = this.connection.prepareStatement(insertQuery);
-        //27 or 28
-        //signUp.setInt(0 + i, 12345);
+            //signUp.setInt(0 + i, 12345);
             signUp.setString(1 + i, levelName);
             signUp.setString(2 + i, userName);
             signUp.setString(3 + i, firstName);
@@ -155,15 +154,24 @@ public class PirateUtility {
             signUp.setString(15 + i, phoneNumber);
             signUp.setString(16 + i, emailAddress);
             signUp.setString(17 + i, memberPassword);
-            signUp.setString(18 + i, memberSince);
-            signUp.setInt(19 + i, 1);
+            signUp.setString(18 + i, dtf.format(now));//memberSince column
+            signUp.setInt(19 + i, 1);//>>>required; activeStatus
             signUp.setString(20 + i, genrePreference);
-            signUp.setString(21 + i, creditCardCCV);
+            
+            //going to cut billing info; static values will satisfy db requirements
+            
+            //signUp.setInt(21 + i, Integer.parseInt(creditCardCCV));//>>>required
+            signUp.setInt(21 + i, 666);//>>>required
+            
             signUp.setString(22 + i, creditCardNumber);
             signUp.setString(23 + i, cardHolderFirstName);
             signUp.setString(24 + i, cardHolderLastName);
-            signUp.setString(25 + i, expYear);
-            signUp.setString(26 + i, expMonth);
+            
+            //signUp.setInt(25 + i, Integer.parseInt(expYear));//>>>required
+            //signUp.setInt(26 + i, Integer.parseInt(expMonth));//>>>required
+            signUp.setInt(25 + i, 666);//>>>required
+            signUp.setInt(26 + i, 666);//>>>required
+            
             signUp.setString(27 + i, ccType);            
             //signUp.getGeneratedKeys();
             signUp.executeUpdate();

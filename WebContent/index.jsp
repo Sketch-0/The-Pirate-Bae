@@ -161,7 +161,7 @@
           <div class="col-md-12 text-center">
             <h2 id = "A1" class="text-white">Comedy</h2>
           </div>
-        </div>          
+        </div>
           
         <div class="row">
           <div class="nonloop-block-13 owl-carousel">
@@ -176,12 +176,13 @@
                   <span class="meta"><% out.print(currentMovie.getReleaseDate()); %> </span>
                   <div class="text-inner">
                     <h2 class="heading mb-3">                        
-                        <a href = "" class="text-black"><% out.print(currentMovie.getTitle()); %></a>
+                        <a class="text-black"><% out.print(currentMovie.getTitle()); %></a>
 			<a href="<% out.print(currentMovie.getTrailer()); %>" class="text-secondary px-2"><span class="icon-play-circle-o"></span></a>
                         <%if (currentUser != null) {%>
                             
-                            <form action = "favouritesServer" method = "post" >
+                            <form action = "favouritesServer" method = "post" >                                
                             <input type = "hidden" name = "movieID" value = "<%out.print(currentMovie.getID());%>"></input>
+                            
                             <%if(utility.checkFavorite(currentUser.getMemberID(), currentMovie.getID())) {%>
                                 <button type = "submit" class="text-secondary px-2">
                                     <!-- <span id="fullHeart" >&#9825</span> -->
@@ -192,7 +193,9 @@
                                     <!-- <span id="emptyHeart" >&#9829</span> -->
                                     <span id="fullHeart" >&#9825</span>
                            <%}%>
+                           
                             </form>
+                           
                         <%}%>
                     </h2>
                     <p> <% out.print(currentMovie.getDescription()); %> </p>
@@ -212,7 +215,7 @@
       <div class="container">
         <div class="row mb-5">
           <div class="col-md-12 text-center">
-            <h2 id = "A1" class="text-white">Comedy</h2>
+            <h2 id = "C1" class="text-white">Comedy</h2>
           </div>
         </div>          
           
@@ -252,7 +255,7 @@
       <div class="container">
         <div class="row mb-5">
           <div class="col-md-12 text-center">
-            <h2 id = "A1" class="text-white">Drama</h2>
+            <h2 id = "D1" class="text-white">Drama</h2>
           </div>
         </div>          
           
@@ -291,7 +294,7 @@
       <div class="container">
         <div class="row mb-5">
           <div class="col-md-12 text-center">
-            <h2 id = "A1" class="text-white">Horror</h2>
+            <h2 id = "H1" class="text-white">Horror</h2>
           </div>
         </div>          
           
@@ -337,7 +340,7 @@
       <div class="container">
         <div class="row mb-5">
           <div class="col-md-12 text-center">
-            <h2 id = "A1" class="text-white">Sci-Fi</h2>
+            <h2 id = "S1" class="text-white">Sci-Fi</h2>
           </div>
         </div>          
           
@@ -379,7 +382,7 @@
       <div class="container">
         <div class="row mb-5">
           <div class="col-md-12 text-center">
-            <h2 id = "A1" class="text-white">Favourites</h2>
+            <h2 id = "F1" class="text-white">Favourites</h2>
           </div>
         </div>          
           
