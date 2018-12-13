@@ -56,10 +56,18 @@
            <div class="mb-5">
              <form action="#" method="post">
                <div class="input-group mb-3">
-                 <input type="text" placeholder="Search" aria-describedby="button-addon2">
-                 <div class="input-group-append">
-                   <button class="btn btn-primary" type="button" id="button-addon2">Send</button>
-                 </div>
+                   
+                   <div class="mb-5">
+                        <form method="post" action = "searchPage.jsp">
+                           <div class="input-group mb-3">
+                             <input type="text" placeholder="Search" aria-describedby="button-addon2" name = "searchValue">
+                             <div class="input-group-append">
+                                 <input type ="submit" value = "Search">
+                             </div>
+                           </div>
+                         </form>
+                    </div>
+                   
                </div>
              </form>
            </div>
@@ -81,8 +89,6 @@
              <li><a href="index.jsp"><b>Home</b></a> </li>
             <li class="has-children">
             </li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="contact.html">Contact</a></li>
           </ul>
         </div>
       </nav>
@@ -106,8 +112,27 @@
                         <div class="text">
                           <span class="meta"><% out.print(currentMovie.getReleaseDate()); %> </span>
                           <div class="text-inner">
-                            <h2 class="heading mb-3"><% out.print(currentMovie.getTitle()); %><a href = "<% out.print(currentMovie.getTrailer()); %>  " class="text-black"><% //out.print(currentMovie.getTitle()); %><span class="icon-play-circle-o"></span></a>
-                                <a href="#" class="text-secondary px-2"><span class="icon-heart"></span></a></h2>
+                            <h2 class="heading mb-3">                        
+                                <a class="text-black"><% out.print(currentMovie.getTitle()); %></a><!-- include a movie page to display information -->
+                                <a href="<% out.print(currentMovie.getTrailer()); %>" class="text-secondary px-2"><span class="icon-play-circle-o"></span></a>
+                                <%if (currentUser != null) {%>
+
+                                    <form action = "favouritesServer" method = "post" >                                
+                                    <input type = "hidden" name = "movieID" value = "<%out.print(currentMovie.getID());%>"></input>
+
+                                    <%if(utility.checkFavorite(currentUser.getMemberID(), currentMovie.getID())) {%>
+                                        <button type = "submit" class="text-secondary px-2">
+                                            <span id="emptyHeart" >&#9829</span>
+                                        <%}
+                                    else {%>
+                                        <button type = "submit" class="text-secondary px-2">
+                                            <span id="fullHeart">&#9825</span>
+                                   <%}%>
+
+                                    </form>
+
+                                <%}%>
+                            </h2>
                             <p> <% out.print(currentMovie.getDescription()); %> </p>
                           </div>
                         </div>

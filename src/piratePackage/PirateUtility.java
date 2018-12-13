@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Date;
 
 
 public class PirateUtility {    
@@ -35,7 +34,7 @@ public class PirateUtility {
     }
     
     //search using the 'like' clause in query
-    public ArrayList<Movie> searchMovies(String search) throws Exception{
+    public ArrayList<Movie> searchMovies(String search) throws Exception {
         ArrayList<Movie> returnedMovies = new ArrayList<Movie>();
         
         String searchQuery = "select * from movie where movieTitle like ?;";

@@ -19,6 +19,7 @@
             
             if(memberID != -1){
                 login.setAttribute("member", new User(memberID));
+                login.setAttribute("currentUsername", enteredUsername);
                 response.sendRedirect("index.jsp");
             }
             

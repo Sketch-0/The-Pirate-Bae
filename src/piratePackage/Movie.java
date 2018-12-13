@@ -1,7 +1,6 @@
 package piratePackage;
 
 import java.sql.*;
-import java.awt.List;
 
 public class Movie {    
     int movieID;
@@ -45,18 +44,6 @@ public class Movie {
     	this.director = director;
     	this.actor1 = actor1;
     	this.actor2 = actor2;
-    }
-    
-    public Connection getConnection( ){
-        Connection connection = null;        
-        try {
-                Class.forName("com.mysql.jdbc.Driver");			
-                connection = DriverManager.getConnection("jdbc:mysql://localhost/moviestoredb", "root", "password");			
-	}
-        catch (Exception e) {
-                e.printStackTrace();
-        }
-        return connection;
     }
     
     public int getID() {

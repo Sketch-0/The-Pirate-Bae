@@ -14,16 +14,16 @@
             String nameTest = request.getParameter("userName");
             piratePackage.PirateUtility utility = new piratePackage.PirateUtility();
             
-            //breaking here; check variables
             if(utility.checkUserName(nameTest)){
-                response.sendRedirect("createUser.jsp");
+                response.sendRedirect("existing.jsp");
             }
             
             else{
                 //add user to database; send the username and password to the entry page
                 session.setAttribute("checkedUsername", nameTest);
                 session.setAttribute("password", request.getParameter("memberPassword"));
-                response.sendRedirect("memberSignUp.jsp");
+                
+                response.sendRedirect("memberAdd.jsp");
             }
         %>
     </head>

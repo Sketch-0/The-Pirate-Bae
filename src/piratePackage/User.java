@@ -5,6 +5,7 @@ import java.awt.List;
 
 public class User {    
     int memberid;
+    String username;
     
     public User(int id){
         this.memberid = id;
